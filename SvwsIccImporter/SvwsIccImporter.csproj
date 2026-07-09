@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <Authors>Marcel Marnitz</Authors>
+    <Company>SchulIT</Company>
+    <Product>SVWS ICC Importer</Product>
+    <Copyright>© 2023 SchulIT</Copyright>
+    <PackageProjectUrl>https://github.com/schulit/svws-icc-importer</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon.png" />
+    <None Remove="licenses.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="licenses.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.142" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="SchulIT.IccImport" Version="2.1.0" />
+    <PackageReference Include="WPF-UI" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SvwsClient\SvwsClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icon.png" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="dotnet-project-licenses -i . -u -o -j" />
+  </Target>
+
+</Project>

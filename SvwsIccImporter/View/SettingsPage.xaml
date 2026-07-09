@@ -1,0 +1,139 @@
+﻿<Page x:Class="SvwsIccImporter.View.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SvwsIccImporter.View"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Title="SettingsPage">
+    <StackPanel Margin="10">
+      
+        <ui:CardExpander IsExpanded="True" ContentPadding="0">
+            <ui:CardExpander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ui:TextBlock VerticalAlignment="Center">SVWS-Einstellungen</ui:TextBlock>
+                    <ui:Button Grid.Column="1"  Margin="0,0,10,0" Command="{Binding ViewModel.TestConnectionCommand}">
+                        Verbindung testen
+                    </ui:Button>
+
+                    <ui:Button Grid.Column="2"  Margin="0,0,10,0" Command="{Binding ViewModel.SaveSettingsCommand}">
+                        Einstellungen speichern
+                    </ui:Button>
+                </Grid>
+            </ui:CardExpander.Header>
+
+            <StackPanel>
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="Server-URL" />
+                    <TextBox Grid.Column="1" Text="{Binding ViewModel.Settings.SvwsServer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="200"/>
+                </Grid>
+
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Schema" />
+                    <TextBox Grid.Column="1" Text="{Binding ViewModel.Settings.SvwsSchema, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="200"/>
+                </Grid>
+
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Benutzername" />
+                    <TextBox Grid.Column="1" Text="{Binding ViewModel.Settings.SvwsUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="200"/>
+                </Grid>
+
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Passwort" />
+                    <TextBox Grid.Column="1" Text="{Binding ViewModel.Settings.SvwsPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="200"/>
+                </Grid>
+
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Nur sichtbare Elemente" />
+                    <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding ViewModel.Settings.OnlyVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="TLS-Zertifikatswarnungen ignorieren" />
+                    <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding ViewModel.Settings.IgnoreCertificateWarnings, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+
+            </StackPanel>
+        </ui:CardExpander>
+
+        <ui:CardExpander ContentPadding="0" IsExpanded="True" Margin="0,16,0,0">
+            <ui:CardExpander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ui:TextBlock VerticalAlignment="Center">ICC-Einstellungen</ui:TextBlock>
+                    <ui:Button Grid.Column="1" Margin="0,0,10,0" Command="{Binding ViewModel.SaveSettingsCommand}">
+                        Einstellungen speichern
+                    </ui:Button>
+                </Grid>
+            </ui:CardExpander.Header>
+
+            <StackPanel>
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="ICC-URL" />
+                    <TextBox Grid.Column="1" Text="{Binding ViewModel.Settings.IccEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="200" />
+                </Grid>
+
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Import Token" />
+                    <TextBox Grid.Column="1" Text="{Binding ViewModel.Settings.IccToken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="200" />
+                </Grid>
+            </StackPanel>
+        </ui:CardExpander>
+    </StackPanel>
+</Page>

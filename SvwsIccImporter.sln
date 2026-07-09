@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11925.98 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SvwsIccImporter", "SvwsIccImporter\SvwsIccImporter.csproj", "{51141BD9-E093-415F-85FF-100CEDA36E3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SvwsClient", "SvwsClient\SvwsClient.csproj", "{EEBECAAC-C70F-42B4-A8CF-81B8C1113F00}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51141BD9-E093-415F-85FF-100CEDA36E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51141BD9-E093-415F-85FF-100CEDA36E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51141BD9-E093-415F-85FF-100CEDA36E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51141BD9-E093-415F-85FF-100CEDA36E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEBECAAC-C70F-42B4-A8CF-81B8C1113F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEBECAAC-C70F-42B4-A8CF-81B8C1113F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEBECAAC-C70F-42B4-A8CF-81B8C1113F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEBECAAC-C70F-42B4-A8CF-81B8C1113F00}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F78CADB3-56B1-4EBB-AF6A-B7BC36B3D5C5}
+	EndGlobalSection
+EndGlobal
