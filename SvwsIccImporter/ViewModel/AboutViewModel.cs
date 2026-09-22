@@ -81,15 +81,15 @@ namespace SvwsIccImporter.ViewModel
 
         public class Library
         {
-            public string? PackageName { get; set; }
+            public string? PackageId { get; set; }
 
-            public string? PackageUrl { get; set; }
+            public string? PackageProjectUrl { get; set; }
 
             public string? Description { get; set; }
 
             public string? LicenseUrl { get; set; }
 
-            public string? LicenseType { get; set; }
+            public string? License { get; set; }
         }
     }
 }

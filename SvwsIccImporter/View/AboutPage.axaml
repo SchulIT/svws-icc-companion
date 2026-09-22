@@ -27,9 +27,9 @@
                      <ItemsControl ItemsSource="{Binding Libraries}">
                          <ItemsControl.ItemTemplate>
                              <DataTemplate>
-                                 <controls:FASettingsExpander Header="{Binding PackageName}" Description="{Binding LicenseType}">
+                                 <controls:FASettingsExpander Header="{Binding PackageId}" Description="{Binding License}">
                                      <controls:FASettingsExpander.Footer>
-                                         <HyperlinkButton NavigateUri="{Binding PackageUrl}" Content="{Binding PackageUrl}" MaxWidth="300" ToolTip.Tip="{Binding PackageUrl}" />
+                                         <HyperlinkButton NavigateUri="{Binding PackageProjectUrl}" Content="{Binding PackageProjectUrl}" MaxWidth="300" ToolTip.Tip="{Binding PackageProjectUrl}" />
                                      </controls:FASettingsExpander.Footer>
 
                                      <controls:FASettingsExpanderItem>

@@ -11,6 +11,7 @@
     <Company>SchulIT</Company>
     <Authors>Marcel Marnitz</Authors>
     <Product>SVWS ICC Importer</Product>
+    <NeutralLanguage>de</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,10 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="12.1.2" />
-    <PackageReference Include="Avalonia.Desktop" Version="12.1.2" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.2" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.2" />
+    <PackageReference Include="Avalonia" Version="12.1.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.3" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.3" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.3" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
@@ -42,6 +43,6 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="dotnet-project-licenses -i . -u -o -j" />
+    <Exec Command="nuget-license -i ./SvwsIccImporter.csproj --file-output ./licenses.json -o Json -ignore &quot;AvaloniaUI.DiagnosticsSupport&quot;" />
   </Target>
 </Project>
