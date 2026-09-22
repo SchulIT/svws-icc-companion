@@ -8,6 +8,7 @@
         x:DataType="vm:SplashScreenViewModel"
         WindowStartupLocation="CenterScreen"
         CanResize="False"
+        Icon="/Assets/icon.ico"
         Height="250" Width="400"
         Title="SVWS ICC Importer">
         <DockPanel Margin="20">
