@@ -89,7 +89,7 @@ namespace SvwsIccImporter.ViewModel
             }
             catch (Exception ex)
             {
-                dialogHelper.Show(new ErrorDialog
+                dialogHelper.ShowAsync(new ErrorDialog
                 {
                     Title = "Fehler",
                     Header = "Fehler beim Speichern",
@@ -120,7 +120,7 @@ namespace SvwsIccImporter.ViewModel
                     {
                         var stammdaten = await client.GetSchuleStammdatenAsync(Settings.SvwsSchema);
 
-                        dialogHelper.Show(new Dialog
+                        dialogHelper.ShowAsync(new Dialog
                         {
                             Icon = Icon.ShieldSuccessGreenBar,
                             Title = "Erfolg",
@@ -131,7 +131,7 @@ namespace SvwsIccImporter.ViewModel
                     }
                     catch (Exception e)
                     {
-                        dialogHelper.Show(new ErrorDialog
+                        dialogHelper.ShowAsync(new ErrorDialog
                         {
                             Title = "Fehler",
                             Header = "Verbindungsfehler",

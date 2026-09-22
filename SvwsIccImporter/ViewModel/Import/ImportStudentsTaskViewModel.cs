@@ -45,7 +45,7 @@ namespace SvwsIccImporter.ViewModel.Import
                 var students = new List<StudentData>();
 
                 foreach (var stammdaten in schuelerStammdatenListe)
-                {
+                { 
                     students.Add(new StudentData
                     {
                         Id = stammdaten.Id.ToString(),
@@ -70,7 +70,7 @@ namespace SvwsIccImporter.ViewModel.Import
             }
             catch (Exception ex)
             {
-                dialogHelper.Show(
+                dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",

@@ -45,7 +45,7 @@ namespace SvwsIccImporter.ViewModel
                 }
                 else
                 {
-                    dialogHelper.Show(new Dialog
+                    await dialogHelper.ShowAsync(new Dialog
                     {
                         Icon = Icon.ShieldWarningYellowBar,
                         Title = "Einstellungen unvollständig",
@@ -55,7 +55,7 @@ namespace SvwsIccImporter.ViewModel
                 }
             } catch(Exception ex)
             {
-                dialogHelper.Show(new ErrorDialog
+                await dialogHelper.ShowAsync(new ErrorDialog
                 {
                     Title = "Fehler",
                     Header = "Fehler beim Abrufen",

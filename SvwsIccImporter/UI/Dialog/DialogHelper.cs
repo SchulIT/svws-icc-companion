@@ -1,5 +1,5 @@
-﻿using System.Windows.Forms;
-using System.Windows.Interop;
+﻿using FluentAvalonia.UI.Controls;
+using System.Threading.Tasks;
 
 namespace SvwsIccImporter.UI.Dialog
 {
@@ -14,62 +14,29 @@ namespace SvwsIccImporter.UI.Dialog
             this.dispatcherHelper = dispatcherHelper;
         }
 
-        public void Show(Dialog dialog)
+        public async Task ShowAsync(Dialog dialog)
         {
-            var taskDialogPage = new TaskDialogPage
+            var taskDialog = new FATaskDialog
             {
-                Text = dialog.Content,
-                Heading = dialog.Header,
-                Caption = dialog.Title,
-                Icon = GetIcon(dialog.Icon)
+                Title = dialog.Title,
+                Header = dialog.Header,
+                Content = dialog.Content,
+                IconSource = new FASymbolIconSource{ Symbol = FASymbol.Alert },
+                Buttons = {
+                    FATaskDialogButton.OKButton
+                }
             };
 
             var errorDialog = dialog as ErrorDialog;
             if (errorDialog != null)
             {
-                taskDialogPage.Icon = TaskDialogIcon.Error;
-                taskDialogPage.Expander = new TaskDialogExpander
-                {
-                    Text = errorDialog.Exception?.Message,
-                    Expanded = true
-                };
+                taskDialog.FooterVisibility = FATaskDialogFooterVisibility.Always;
+                taskDialog.Footer = errorDialog.Exception?.Message;
+                taskDialog.IconSource = new FASymbolIconSource { Symbol = FASymbol.ReportHacked };
             }
 
-            /*var confirmDialog = dialog as ConfirmDialog;
-            if (confirmDialog != null)
-            {
-                var buttonContinue = TaskDialogButton.Continue;
-                var buttonClose = TaskDialogButton.Close;
-
-                buttonContinue.Click += (s, e) =>
-                {
-                    confirmDialog.ConfirmAction?.Invoke();
-                };
-
-                buttonClose.Click += (s, e) =>
-                {
-                    confirmDialog.CancelAction?.Invoke();
-                };
-            }*/
-
-            dispatcherHelper.InvokeOnUiThread(() => TaskDialog.ShowDialog(new WindowInteropHelper(windowManager.GetFirstOpenedWindow()).Handle, taskDialogPage));
-        }
-
-        private static TaskDialogIcon GetIcon(Icon icon)
-        {
-            return icon switch
-            {
-                Icon.None => TaskDialogIcon.None,
-                Icon.Information => TaskDialogIcon.Information,
-                Icon.Warning => TaskDialogIcon.Warning,
-                Icon.Shield => TaskDialogIcon.Shield,
-                Icon.ShieldBlueBar => TaskDialogIcon.ShieldBlueBar,
-                Icon.ShieldGrayBar => TaskDialogIcon.ShieldGrayBar,
-                Icon.ShieldWarningYellowBar => TaskDialogIcon.ShieldWarningYellowBar,
-                Icon.ShieldErrorRedBar => TaskDialogIcon.ShieldErrorRedBar,
-                Icon.ShieldSuccessGreenBar => TaskDialogIcon.ShieldSuccessGreenBar,
-                _ => TaskDialogIcon.None,
-            };
+            taskDialog.XamlRoot = windowManager.GetFirstOpenedWindow();
+            await taskDialog.ShowAsync();
         }
     }
 }

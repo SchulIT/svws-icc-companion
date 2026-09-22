@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 
 namespace SvwsIccImporter.ViewModel.Import
 {
@@ -112,7 +111,7 @@ namespace SvwsIccImporter.ViewModel.Import
             }
             catch (Exception ex)
             {
-                dialogHelper.Show(
+                dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",

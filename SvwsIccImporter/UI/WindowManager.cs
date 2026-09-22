@@ -1,38 +1,20 @@
-﻿using SvwsIccImporter.View;
-using System;
-using System.Linq;
-using System.Windows;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 
 namespace SvwsIccImporter.UI
 {
     public class WindowManager : IWindowManager
     {
-        /*public void OpenMainView()
+        private readonly IClassicDesktopStyleApplicationLifetime appLifetime;
+        
+        public WindowManager(IClassicDesktopStyleApplicationLifetime appLifetime)
         {
-            var view = new MainView();
-            view.Show();
-            CloseAllOtherWindows(view);
-        }*/
-
-        private static void CloseAllOtherWindows()
-        {
-            CloseAllOtherWindows(null);
-        }
-
-        private static void CloseAllOtherWindows(Window? windowToStayOpen)
-        {
-            foreach (var window in Application.Current.Windows.OfType<Window>())
-            {
-                if (window != windowToStayOpen)
-                {
-                    window.Close();
-                }
-            }
+            this.appLifetime = appLifetime;
         }
 
         public Window? GetFirstOpenedWindow()
         {
-            return Application.Current.Windows.OfType<Window>().FirstOrDefault();
+            return appLifetime.MainWindow;
         }
     }
 }

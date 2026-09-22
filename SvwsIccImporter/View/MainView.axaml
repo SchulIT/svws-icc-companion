@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:primitives="using:FluentAvalonia.UI.Controls.Primitives"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SvwsIccImporter.View.MainView"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:view="using:SvwsIccImporter.View"
+        xmlns:vm="using:SvwsIccImporter.ViewModel"
+        x:DataType="{x:Type vm:SvwsViewModel}"
+        Icon="/Assets/icon.ico"
+        Height="500" Width="800"
+        Title="SVWS ICC Importer">
+        <ui:FANavigationView PaneDisplayMode="Top" IsSettingsVisible="False" x:Name="NavigationView">
+            <ui:FANavigationView.MenuItems>
+                <ui:FANavigationViewItem Content="Import" IconSource="Upload" Tag="{x:Type view:ImportPage}"></ui:FANavigationViewItem>
+            </ui:FANavigationView.MenuItems>
+
+            <ui:FANavigationView.FooterMenuItems>
+                <ui:FANavigationViewItemHeader Content="{Binding SchoolName}"></ui:FANavigationViewItemHeader>
+                <ui:FANavigationViewItem Content="Einstellungen" IconSource="Settings" Tag="{x:Type view:SettingsPage}"></ui:FANavigationViewItem>
+                <ui:FANavigationViewItem Content="Über" Tag="{x:Type view:AboutPage}"></ui:FANavigationViewItem>
+            </ui:FANavigationView.FooterMenuItems>
+
+            <ui:FAFrame x:Name="ContentFrame"></ui:FAFrame>
+        </ui:FANavigationView>
+</Window>

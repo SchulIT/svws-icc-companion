@@ -8,6 +8,6 @@ namespace SvwsIccImporter.UI.Dialog
 {
     public interface IDialogHelper
     {
-        void Show(Dialog dialog);
+        Task ShowAsync(Dialog dialog);
     }
 }

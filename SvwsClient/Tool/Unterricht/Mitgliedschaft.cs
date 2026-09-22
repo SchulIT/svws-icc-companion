@@ -4,6 +4,6 @@
     {
         public long KindId { get; set; }
 
-        public string Art { get; set; }
+        public string Art { get; set; } = string.Empty;
     }
 }

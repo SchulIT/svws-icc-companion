@@ -1,0 +1,44 @@
+<ContentPage xmlns="https://github.com/avaloniaui"
+             xmlns:controls="using:FluentAvalonia.UI.Controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SvwsIccImporter.ViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="{x:Type vm:AboutViewModel}"
+             x:Class="SvwsIccImporter.View.AboutPage">
+             <ScrollViewer>
+                 <StackPanel Margin="10">
+                     <controls:FASettingsExpander IsExpanded="True" Header="{Binding ApplicationName}" Description="{Binding Copyright}" Footer="{Binding Version}"
+                                                  Margin="0,0,0,10">
+                        <controls:FASettingsExpander.IconSource>
+                            <controls:FAImageIconSource Source="/Assets/icon.png" />
+                        </controls:FASettingsExpander.IconSource>
+
+                        <controls:FASettingsExpanderItem Content="{Binding ProjectUrl}"
+                                                      IconSource="Open"
+                                                      IsClickEnabled="True"
+                                                      Click="OnOpenProjectItemClick" />
+                     </controls:FASettingsExpander>
+
+                     <controls:FAInfoBar IsOpen="True" IsClosable="False" Margin="0,0,0,10"
+                              Message="Dieses Programm nutzt Bibliotheken von Drittanbietern. Diese sind im Folgenden aufgelistet. Besonderen Dank an die Entwickler dieser Bibliothken." />
+
+                     <ItemsControl ItemsSource="{Binding Libraries}">
+                         <ItemsControl.ItemTemplate>
+                             <DataTemplate>
+                                 <controls:FASettingsExpander Header="{Binding PackageName}" Description="{Binding LicenseType}">
+                                     <controls:FASettingsExpander.Footer>
+                                         <HyperlinkButton NavigateUri="{Binding PackageUrl}" Content="{Binding PackageUrl}" MaxWidth="300" ToolTip.Tip="{Binding PackageUrl}" />
+                                     </controls:FASettingsExpander.Footer>
+
+                                     <controls:FASettingsExpanderItem>
+                                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap"></TextBlock>
+                                     </controls:FASettingsExpanderItem>
+                                 </controls:FASettingsExpander>
+                             </DataTemplate>
+                         </ItemsControl.ItemTemplate>
+                     </ItemsControl>
+                 </StackPanel>
+             </ScrollViewer>
+</ContentPage>

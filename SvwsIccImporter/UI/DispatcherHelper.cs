@@ -1,11 +1,11 @@
-﻿using System;
-using System.Windows.Threading;
+﻿using Avalonia.Threading;
+using System;
 
 namespace SvwsIccImporter.UI
 {
     public class DispatcherHelper : IDispatcherHelper
     {
-        private Dispatcher dispatcher;
+        private Dispatcher? dispatcher;
 
         public DispatcherHelper()
         {

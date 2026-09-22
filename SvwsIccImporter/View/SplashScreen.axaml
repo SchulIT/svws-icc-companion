@@ -1,15 +1,15 @@
-﻿<Window x:Class="SvwsIccImporter.View.SplashScreen"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        mc:Ignorable="d"
+        xmlns:vm="using:SvwsIccImporter.ViewModel"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SvwsIccImporter.View.SplashScreen"
+        x:DataType="vm:SplashScreenViewModel"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        Title="SplashScreen" Height="250" Width="400">
-    <Border BorderBrush="{DynamicResource SystemControlBackgroundAccentBrush}" BorderThickness="1">
+        CanResize="False"
+        Height="250" Width="400"
+        Title="SVWS ICC Importer">
         <DockPanel Margin="20">
             <Grid DockPanel.Dock="Bottom">
                 <Grid.RowDefinitions>
@@ -28,8 +28,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Image Source="../icon.png" Width="48" Height="48"
-                       RenderOptions.BitmapScalingMode="Fant" />
+                <Image Source="/Assets/icon.png" Width="48" Height="48"
+                       RenderOptions.BitmapInterpolationMode="HighQuality"/>
 
                 <Grid Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0">
                     <Grid.RowDefinitions>
@@ -42,5 +42,4 @@
                 </Grid>
             </Grid>
         </DockPanel>
-    </Border>
 </Window>

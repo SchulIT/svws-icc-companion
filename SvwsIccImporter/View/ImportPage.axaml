@@ -1,0 +1,128 @@
+<ContentPage xmlns="https://github.com/avaloniaui"
+             xmlns:controls="using:FluentAvalonia.UI.Controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:SvwsIccImporter.ViewModel"
+             x:DataType="{x:Type vm:ImportViewModel}"
+             xmlns:local="using:SvwsIccImporter.View"
+             x:Class="SvwsIccImporter.View.ImportPage">
+
+             <ScrollViewer>
+                 <Grid Margin="10">
+                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <controls:FACommandBar Grid.ColumnSpan="2">
+                        <controls:FACommandBar.PrimaryCommands>
+                            <controls:FACommandBarElementContainer>
+                                <controls:FAComboBox ItemsSource="{Binding Sections}"
+                                                     SelectedItem="{Binding SelectedSection}"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,10,0">
+                                             <controls:FAComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock>
+                                                            <Run Text="{Binding Schuljahr}" />
+                                                            <Run Text=" / " />
+                                                            <Run Text="{Binding Abschnitt}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </controls:FAComboBox.ItemTemplate>
+                                </controls:FAComboBox>
+                            </controls:FACommandBarElementContainer>
+
+                            <controls:FACommandBarSeparator />
+
+                            <controls:FACommandBarButton IconSource="Upload" Command="{Binding ImportCommand}" Label="Import starten" />
+                            <controls:FACommandBarButton IconSource="Cancel" Command="{Binding CancelCommand}" Label="Import abbrechen" />
+
+                            <controls:FACommandBarSeparator />
+
+                            <controls:FACommandBarElementContainer>
+                                <controls:FAProgressRing IsVisible="{Binding IsBusy}" />
+                            </controls:FACommandBarElementContainer>
+
+                            <controls:FACommandBarElementContainer>
+                                <TextBlock VerticalAlignment="Center" Margin="0,0,5,0" Text="{Binding BusyText}"/>
+                            </controls:FACommandBarElementContainer>
+                        </controls:FACommandBar.PrimaryCommands>
+                    </controls:FACommandBar>
+
+                    <local:ImportTask Grid.Row="1" Grid.Column="0"
+                                     CheckboxLabel="Lehrkräfte"
+                                     IsImportEnabled="{Binding TeachersViewModel.IsEnabled, Mode=TwoWay}"
+                                     BusyText="{Binding TeachersViewModel.BusyText}" Height="48" Margin="0,0,0,48" Grid.RowSpan="2" VerticalAlignment="Bottom" />
+
+                    <local:ImportTask Grid.Row="1" Grid.Column="1"
+                                      CheckboxLabel="Fächer"
+                                      IsImportEnabled="{Binding SubjectsViewModel.IsEnabled, Mode=TwoWay}"
+                                      BusyText="{Binding SubjectsViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="2" Grid.Column="0"
+                                      CheckboxLabel="Klassen"
+                                      IsImportEnabled="{Binding GradesViewModel.IsEnabled, Mode=TwoWay}"
+                                      BusyText="{Binding GradesViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="2" Grid.Column="1"
+                                    CheckboxLabel="Lernende"
+                                    IsImportEnabled="{Binding StudentsViewModel.IsEnabled, Mode=TwoWay}"
+                                    BusyText="{Binding StudentsViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="3" Grid.Column="0"
+                                            CheckboxLabel="Klassenleitungen"
+                                            IsImportEnabled="{Binding GradeTeachersViewModel.IsEnabled, Mode=TwoWay}"
+                                            BusyText="{Binding GradeTeachersViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="3" Grid.Column="1"
+                                            CheckboxLabel="Klassenmitgliedschaften"
+                                            IsImportEnabled="{Binding GradeMembershipsViewModel.IsEnabled, Mode=TwoWay}"
+                                            BusyText="{Binding GradeMembershipsViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="4" Grid.Column="0"
+                                            CheckboxLabel="Lernplattformen"
+                                            IsImportEnabled="{Binding LmsViewModel.IsEnabled, Mode=TwoWay}"
+                                            BusyText="{Binding LmsViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="4" Grid.Column="1"
+                                            CheckboxLabel="Schüler-Lernplattforminfos"
+                                            IsImportEnabled="{Binding StudentsLmsViewModel.IsEnabled, Mode=TwoWay}"
+                                            BusyText="{Binding StudentsLmsViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="5" Grid.Column="0"
+                                            CheckboxLabel="Datenschutzkategorien"
+                                            IsImportEnabled="{Binding PrivacyCategoriesViewModel.IsEnabled, Mode=TwoWay}"
+                                            BusyText="{Binding PrivacyCategoriesViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="5" Grid.Column="1"
+                                            CheckboxLabel="Unterrichte"
+                                            IsImportEnabled="{Binding TuitionsViewModel.IsEnabled, Mode=TwoWay}"
+                                            BusyText="{Binding TuitionsViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="6" Grid.Column="0"
+                                            CheckboxLabel="Lerngruppen"
+                                            IsImportEnabled="{Binding StudyGroupsViewModel.IsEnabled, Mode=TwoWay}"
+                                            BusyText="{Binding StudyGroupsViewModel.BusyText}" />
+
+                    <local:ImportTask Grid.Row="6" Grid.Column="1"
+                                            CheckboxLabel="Lerngruppen-Mitgliedschaften"
+                                            IsImportEnabled="{Binding StudyGroupMembershipsViewModel.IsEnabled, Mode=TwoWay}"
+                                            BusyText="{Binding StudyGroupMembershipsViewModel.BusyText}" />
+
+                 </Grid>
+             </ScrollViewer>
+</ContentPage>

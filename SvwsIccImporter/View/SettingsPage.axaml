@@ -1,0 +1,101 @@
+<ContentPage xmlns="https://github.com/avaloniaui"
+             xmlns:controls="using:FluentAvalonia.UI.Controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SvwsIccImporter.ViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SvwsIccImporter.View.SettingsPage"
+             x:DataType="{x:Type vm:SettingsViewModel}">
+
+             <ScrollViewer>
+                 <StackPanel Margin="10">
+                     <controls:FASettingsExpander IsExpanded="True" Margin="0,0,0,10">
+                         <controls:FASettingsExpander.Header>
+                             <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock VerticalAlignment="Center">SVWS-Einstellungen</TextBlock>
+                                <Button Grid.Column="1"  Margin="0,0,10,0" Command="{Binding TestConnectionCommand}">
+                                    Verbindung testen
+                                </Button>
+
+                                <Button Grid.Column="2"  Margin="0,0,10,0" Command="{Binding SaveSettingsCommand}">
+                                    Einstellungen speichern
+                                </Button>
+                            </Grid>
+                         </controls:FASettingsExpander.Header>
+
+                         <controls:FASettingsExpanderItem Content="Server-URL">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <TextBox Grid.Column="1" Text="{Binding Settings.SvwsServer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="300"/>
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+
+                         <controls:FASettingsExpanderItem Content="Schema">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <TextBox Grid.Column="1" Text="{Binding Settings.SvwsSchema, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="300"/>
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+
+                         <controls:FASettingsExpanderItem Content="Benutzername">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <TextBox Grid.Column="1" Text="{Binding Settings.SvwsUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="300"/>
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+
+                         <controls:FASettingsExpanderItem Content="Passwort">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <TextBox Grid.Column="1" Text="{Binding Settings.SvwsPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="300"/>
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+
+                         <controls:FASettingsExpanderItem Content="Nur sichtbare Elemente">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <ToggleSwitch Grid.Column="1" IsChecked="{Binding Settings.OnlyVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" OnContent="Ein" OffContent="Aus" />
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+
+                         <controls:FASettingsExpanderItem Content="TLS-Zertifikatswarnungen ignorieren">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <ToggleSwitch Grid.Column="1" IsChecked="{Binding Settings.IgnoreCertificateWarnings, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" OnContent="Ein" OffContent="Aus" />
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+                     </controls:FASettingsExpander>
+
+                     <controls:FASettingsExpander IsExpanded="True" Margin="0,0,0,10">
+                         <controls:FASettingsExpander.Header>
+                             <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock VerticalAlignment="Center">ICC-Einstellungen</TextBlock>
+
+                                <Button Grid.Column="2"  Margin="0,0,10,0" Command="{Binding SaveSettingsCommand}">
+                                    Einstellungen speichern
+                                </Button>
+                            </Grid>
+                         </controls:FASettingsExpander.Header>
+
+                         <controls:FASettingsExpanderItem Content="Server-URL">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <TextBox Grid.Column="1" Text="{Binding Settings.IccEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="300"/>
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+
+                         <controls:FASettingsExpanderItem Content="Import Token">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <TextBox Grid.Column="1" Text="{Binding Settings.IccToken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="300"/>
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+                     </controls:FASettingsExpander>
+                 </StackPanel>
+             </ScrollViewer>
+</ContentPage>
