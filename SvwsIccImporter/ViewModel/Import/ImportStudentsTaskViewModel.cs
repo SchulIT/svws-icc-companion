@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SvwsClient.Tool;
 
 namespace SvwsIccImporter.ViewModel.Import
 {
@@ -35,17 +36,30 @@ namespace SvwsIccImporter.ViewModel.Import
                 BusyText = $"Filtere {schuelerListe.Count} Kind(er) auf den aktuellen Abschnitt";
                 var schuelerListeAktuellerAbschnitt = schuelerListe.Where(x => x.IdSchuljahresabschnitt == abschnitt.Id).ToArray();
                 var schuelerCount = schuelerListeAktuellerAbschnitt.Count();
+                
+                var schuelerStammdatenRequests = new List<Func<Task<SchuelerStammdaten>>>();
+                var schuelerEinwilligungenRequests = new List<Func<Task<ICollection<SchuelerEinwilligung>>>>();
 
+                foreach (var schueler in schuelerListeAktuellerAbschnitt)
+                {
+                    schuelerStammdatenRequests.Add(() => client.GetSchuelerStammdatenAsync(settingsManager.Settings.Svws.Schema, schueler.Id));
+                    schuelerEinwilligungenRequests.Add(() => client.GetSchuelerEinwilligungenAsync(settingsManager.Settings.Svws.Schema, schueler.Id));
+                }
+                
                 BusyText = $"Hole Stammdaten für {schuelerCount} Kind(er)";
-                var schuelerStammdatenListe = await client.GetSchuelerStammdatenMultipleAsync(settingsManager.Settings.Svws.Schema, schuelerListeAktuellerAbschnitt.Select(x => x.Id).ToList());
-
-                BusyText = $"Hole Datenschutz-Einwilligungen für {schuelerCount} Kind(er)";
-                var schuelerDatenschutzDaten = await client.GetSchuelerEinwilligungenBySchuelerIdsAsync(settingsManager.Settings.Svws.Schema, schuelerListeAktuellerAbschnitt.Select(x => x.Id).ToList());
-
+                var schuelerStammdatenListe = await BatchRequest.SendRequestAsync(schuelerStammdatenRequests);
+                
+                BusyText = $"Hole Datenschutzeinwilligungen für {schuelerCount} Kind(er)";
+                var einwilligungen = await BatchRequest.SendRequestAsync(schuelerEinwilligungenRequests);
+                var einwilligungenUnfolded = einwilligungen.SelectMany(x => x).ToList();
+                
                 var students = new List<StudentData>();
 
                 foreach (var stammdaten in schuelerStammdatenListe)
-                { 
+                {
+                    BusyText = $"Hole Datenschutzeinwilligungen für {stammdaten.Nachname}, {stammdaten.Vorname}";
+                    var datenschutzEinwilligungen = einwilligungenUnfolded.Where(x => x.IdSchueler == stammdaten.Id).ToList();
+                    
                     students.Add(new StudentData
                     {
                         Id = stammdaten.Id.ToString(),
@@ -55,7 +69,7 @@ namespace SvwsIccImporter.ViewModel.Import
                         Gender = stammdaten.Geschlecht.ToIccGender(),
                         Status = stammdaten.Status.ToString(),
                         Birthday = stammdaten.Geburtsdatum.ToDateTime(),
-                        ApprovedPrivacyCategories = schuelerDatenschutzDaten.Where(x => x.IdSchueler == stammdaten.Id).Where(x => x.Status == true).Select(x => x.IdEinwilligungsart.ToString()).ToList()
+                        ApprovedPrivacyCategories = datenschutzEinwilligungen.Where(x => x.Status == true).Select(x => x.IdEinwilligungsart.ToString()).ToList()
                     });
                 }
 
@@ -70,7 +84,7 @@ namespace SvwsIccImporter.ViewModel.Import
             }
             catch (Exception ex)
             {
-                dialogHelper.ShowAsync(
+                await dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",

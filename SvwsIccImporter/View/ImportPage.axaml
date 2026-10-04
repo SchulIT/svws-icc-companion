@@ -65,61 +65,73 @@
 
                     <local:ImportTask Grid.Row="1" Grid.Column="0"
                                      CheckboxLabel="Lehrkräfte"
+                                     IsEnabled="{Binding !IsBusy}"
                                      IsImportEnabled="{Binding TeachersViewModel.IsEnabled, Mode=TwoWay}"
-                                     BusyText="{Binding TeachersViewModel.BusyText}" Height="48" Margin="0,0,0,48" Grid.RowSpan="2" VerticalAlignment="Bottom" />
+                                     BusyText="{Binding TeachersViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="1" Grid.Column="1"
                                       CheckboxLabel="Fächer"
+                                      IsEnabled="{Binding !IsBusy}"
                                       IsImportEnabled="{Binding SubjectsViewModel.IsEnabled, Mode=TwoWay}"
                                       BusyText="{Binding SubjectsViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="2" Grid.Column="0"
                                       CheckboxLabel="Klassen"
+                                      IsEnabled="{Binding !IsBusy}"
                                       IsImportEnabled="{Binding GradesViewModel.IsEnabled, Mode=TwoWay}"
                                       BusyText="{Binding GradesViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="2" Grid.Column="1"
                                     CheckboxLabel="Lernende"
+                                    IsEnabled="{Binding !IsBusy}"
                                     IsImportEnabled="{Binding StudentsViewModel.IsEnabled, Mode=TwoWay}"
                                     BusyText="{Binding StudentsViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="3" Grid.Column="0"
                                             CheckboxLabel="Klassenleitungen"
+                                            IsEnabled="{Binding !IsBusy}"
                                             IsImportEnabled="{Binding GradeTeachersViewModel.IsEnabled, Mode=TwoWay}"
                                             BusyText="{Binding GradeTeachersViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="3" Grid.Column="1"
                                             CheckboxLabel="Klassenmitgliedschaften"
+                                            IsEnabled="{Binding !IsBusy}"
                                             IsImportEnabled="{Binding GradeMembershipsViewModel.IsEnabled, Mode=TwoWay}"
                                             BusyText="{Binding GradeMembershipsViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="4" Grid.Column="0"
                                             CheckboxLabel="Lernplattformen"
+                                            IsEnabled="{Binding !IsBusy}"
                                             IsImportEnabled="{Binding LmsViewModel.IsEnabled, Mode=TwoWay}"
                                             BusyText="{Binding LmsViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="4" Grid.Column="1"
                                             CheckboxLabel="Schüler-Lernplattforminfos"
+                                            IsEnabled="{Binding !IsBusy}"
                                             IsImportEnabled="{Binding StudentsLmsViewModel.IsEnabled, Mode=TwoWay}"
                                             BusyText="{Binding StudentsLmsViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="5" Grid.Column="0"
                                             CheckboxLabel="Datenschutzkategorien"
+                                            IsEnabled="{Binding !IsBusy}"
                                             IsImportEnabled="{Binding PrivacyCategoriesViewModel.IsEnabled, Mode=TwoWay}"
                                             BusyText="{Binding PrivacyCategoriesViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="5" Grid.Column="1"
                                             CheckboxLabel="Unterrichte"
+                                            IsEnabled="{Binding !IsBusy}"
                                             IsImportEnabled="{Binding TuitionsViewModel.IsEnabled, Mode=TwoWay}"
                                             BusyText="{Binding TuitionsViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="6" Grid.Column="0"
                                             CheckboxLabel="Lerngruppen"
+                                            IsEnabled="{Binding !IsBusy}"
                                             IsImportEnabled="{Binding StudyGroupsViewModel.IsEnabled, Mode=TwoWay}"
                                             BusyText="{Binding StudyGroupsViewModel.BusyText}" />
 
                     <local:ImportTask Grid.Row="6" Grid.Column="1"
                                             CheckboxLabel="Lerngruppen-Mitgliedschaften"
+                                            IsEnabled="{Binding !IsBusy}"
                                             IsImportEnabled="{Binding StudyGroupMembershipsViewModel.IsEnabled, Mode=TwoWay}"
                                             BusyText="{Binding StudyGroupMembershipsViewModel.BusyText}" />
 

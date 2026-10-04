@@ -129,6 +129,7 @@ namespace SvwsIccImporter.ViewModel
 
             try
             {
+                IsBusy = true;
                 cts = new CancellationTokenSource();
 
                 importConfigurator.Configure();
@@ -173,6 +174,7 @@ namespace SvwsIccImporter.ViewModel
             {
                 IsBusy = false;
                 cts = null;
+                CancelCommand.NotifyCanExecuteChanged();
             }
         }
 

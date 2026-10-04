@@ -6,7 +6,7 @@
              xmlns:vm="using:SvwsIccImporter.ViewModel.Import"
              x:Name="root"
              x:Class="SvwsIccImporter.View.ImportTask">
-             <Grid>
+             <Grid Margin="0,0,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -14,8 +14,6 @@
                 </Grid.RowDefinitions>
         
                 <CheckBox IsChecked="{Binding #root.IsImportEnabled}" Content="{Binding #root.CheckboxLabel}" />
-                <TextBlock Text="{Binding #root.BusyText}"
-                           Margin="40,0,0,0"
-                           Grid.Row="1"/>
+                <TextBlock Text="{Binding #root.BusyText}" Grid.Row="1"/>
              </Grid>
 </UserControl>

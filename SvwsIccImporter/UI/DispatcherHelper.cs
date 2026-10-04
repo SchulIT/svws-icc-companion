@@ -1,5 +1,6 @@
 ﻿using Avalonia.Threading;
 using System;
+using System.Threading.Tasks;
 
 namespace SvwsIccImporter.UI
 {
@@ -20,6 +21,11 @@ namespace SvwsIccImporter.UI
         public void InvokeOnUiThread(Action action)
         {
             dispatcher?.Invoke(action);
+        }
+
+        public Task InvokeOnUiThreadAsync(Func<Task> action)
+        {
+            return dispatcher?.InvokeAsync(action);
         }
     }
 }

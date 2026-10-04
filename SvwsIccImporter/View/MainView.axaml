@@ -10,7 +10,7 @@
         xmlns:vm="using:SvwsIccImporter.ViewModel"
         x:DataType="{x:Type vm:SvwsViewModel}"
         Icon="/Assets/icon.ico"
-        Height="500" Width="800"
+        Height="500" Width="900"
         Title="SVWS ICC Importer">
         <ui:FANavigationView PaneDisplayMode="Top" IsSettingsVisible="False" x:Name="NavigationView">
             <ui:FANavigationView.MenuItems>

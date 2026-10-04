@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using FluentAvalonia.UI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using SchulIT.IccImport;
@@ -18,7 +19,7 @@ namespace SvwsIccImporter.DependencyInjection
         public static void AddCommonServices(this IServiceCollection collection)
         {
             collection.AddSingleton(typeof(IFANavigationPageFactory), sp => new NavigationPageFactory(sp));
-            collection.AddSingleton(typeof(IClassicDesktopStyleApplicationLifetime), sp => Avalonia.Application.Current.ApplicationLifetime);
+            collection.AddSingleton(typeof(IClassicDesktopStyleApplicationLifetime), sp => Application.Current.ApplicationLifetime);
 
             collection.AddSingleton<ISettingsManager, JsonSettingsManager>();
             collection.AddSingleton<IWindowManager, WindowManager>();

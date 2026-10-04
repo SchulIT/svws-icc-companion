@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace SvwsIccImporter.UI
 {
@@ -7,5 +8,7 @@ namespace SvwsIccImporter.UI
         void Initialize();
 
         void InvokeOnUiThread(Action action);
+
+        Task InvokeOnUiThreadAsync(Func<Task> action);
     }
 }

@@ -5,16 +5,23 @@ namespace SvwsClient.Tool.Unterricht
     public class UnterrichtResolver
     {
 
+        private const int BatchSize = 50;
+        
         private async Task<List<LeistungsdatenIntern>> GetLeistungsdatenAsync(SvwsRestClient client, string schema, long abschnittId)
         {
             var result = new List<LeistungsdatenIntern>();
             var schuelerListe = await client.GetSchuelerFuerAbschnittAsync(schema, abschnittId);
             var schuelerListeAktuellerAbschnitt = schuelerListe.Where(x => x.IdSchuljahresabschnitt == abschnittId).ToArray();
 
+            var requests = new List<Func<Task<SchuelerLernabschnittsdaten>>>();
             foreach (var schueler in schuelerListeAktuellerAbschnitt)
             {
-                var lernabschnittsdaten = await client.GetSchuelerLernabschnittsdatenAsync(schema, schueler.Id, abschnittId);
+                requests.Add(() => client.GetSchuelerLernabschnittsdatenAsync(schema, schueler.Id, abschnittId));
+            }
 
+            var responses = await BatchRequest.SendRequestAsync(requests);
+            foreach (var lernabschnittsdaten in responses)
+            {
                 foreach (var leistungsdaten in lernabschnittsdaten.Leistungsdaten)
                 {
                     result.Add(new LeistungsdatenIntern(leistungsdaten, lernabschnittsdaten));
@@ -29,14 +36,14 @@ namespace SvwsClient.Tool.Unterricht
             var faecher = await client.GetFaecherAsync(schema);
             var faecherDict = faecher.ToDictionary(x => x.Id);
 
-            var klassen = await client.GetKlassenFuerAbschnittAsync(schema, abschnittId);
-            var klassenDict = klassen.ToDictionary(x => x.Id);
+            var klassen = await client.GetListKlassenListeEintragBySchuljahresabschnittAsync(schema, abschnittId);
+            var klassenDict = klassen.Where(x => x.AnzahlZugeordneteSchueler > 0).ToDictionary(x => x.Id);
 
             var lehrkraefte = await client.GetLehrerAsync(schema);
             var lehrkraefteDict = lehrkraefte.ToDictionary(x => x.Id);
 
             var leistungsdaten = await GetLeistungsdatenAsync(client, schema, abschnittId);
-
+            
             var klassenunterrichte = leistungsdaten
                 .Where(x => x.Leistungsdaten.KursID == null)
                 .GroupBy(x => new { x.Leistungsdaten.FachID, x.Leistungsdaten.LehrerID, x.Leistungsdaten.ZusatzkraftID, x.Lernabschnittsdaten.KlassenID, x.Leistungsdaten.Kursart })
@@ -71,7 +78,7 @@ namespace SvwsClient.Tool.Unterricht
                         {
                             var klasse = ld.Lernabschnittsdaten.KlassenID.Value;
 
-                            if(!unterricht.Klassen.Where(x => x.Id == ld.Lernabschnittsdaten.KlassenID).Any() && klassenDict.TryGetValue(ld.Lernabschnittsdaten.KlassenID.Value, out KlassenDaten? klassenDaten))
+                            if(!unterricht.Klassen.Where(x => x.Id == ld.Lernabschnittsdaten.KlassenID).Any() && klassenDict.TryGetValue(ld.Lernabschnittsdaten.KlassenID.Value, out KlassenListeEintrag? klassenDaten))
                             {
                                 unterricht.Klassen.Add(new Klasse(ld.Lernabschnittsdaten.KlassenID.Value, klassenDaten.Kuerzel));
                             }
@@ -102,7 +109,7 @@ namespace SvwsClient.Tool.Unterricht
                 var unterricht = new Unterricht
                 {
                     KursId = kurs.Id,
-                    KursBezeichnung = kurs.BezeichnungZeugnis,
+                    KursBezeichnung = kurs.BezeichnungZeugnis ?? kurs.Kuerzel,
                     IstSichtbar = kurs.IstSichtbar,
                     Fach = new Fach(kurs.IdFach, faecherDict[kurs.IdFach].Kuerzel),
                     Lehrkraefte = kurs.WeitereLehrer.Select(x => x.IdLehrer != null && lehrkraefteDict.ContainsKey(x.IdLehrer.Value) ? lehrkraefteDict[x.IdLehrer.Value] : null).Where(x => x != null).Select(x => new Lehrkraft(x.Id, x.Kuerzel, x.IstSichtbar)).ToList()
@@ -120,6 +127,22 @@ namespace SvwsClient.Tool.Unterricht
                         KindId = kind.Lernabschnittsdaten.SchuelerID,
                         Art = kind.Leistungsdaten.Kursart
                     });
+
+                    if (kind.Lernabschnittsdaten.KlassenID != null && klassenDict.ContainsKey(kind.Lernabschnittsdaten.KlassenID.Value))
+                    {
+                        var klasse = klassenDict[kind.Lernabschnittsdaten.KlassenID.Value];
+                        unterricht.Klassen.Add(new Klasse(klasse.Id, klasse.Kuerzel));
+                    }
+                }
+                
+                unterricht.Klassen = unterricht.Klassen.DistinctBy(x => x.Id).ToList();
+
+                if (unterricht.Klassen.Count == 0)
+                {
+                    foreach (var klasse in klassen.Where(x => kurs.IdJahrgaenge.Contains(x.IdJahrgang) && x.AnzahlZugeordneteSchueler > 0))
+                    {
+                        unterricht.Klassen.Add(new Klasse(klasse.Id, klasse.Kuerzel));
+                    }
                 }
 
                 kursunterrichte.Add(unterricht);

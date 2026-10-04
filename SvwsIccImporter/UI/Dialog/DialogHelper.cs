@@ -16,27 +16,31 @@ namespace SvwsIccImporter.UI.Dialog
 
         public async Task ShowAsync(Dialog dialog)
         {
-            var taskDialog = new FATaskDialog
+            await dispatcherHelper.InvokeOnUiThreadAsync(async () =>
             {
-                Title = dialog.Title,
-                Header = dialog.Header,
-                Content = dialog.Content,
-                IconSource = new FASymbolIconSource{ Symbol = FASymbol.Alert },
-                Buttons = {
-                    FATaskDialogButton.OKButton
+                var taskDialog = new FATaskDialog
+                {
+                    Title = dialog.Title,
+                    Header = dialog.Header,
+                    Content = dialog.Content,
+                    IconSource = new FASymbolIconSource{ Symbol = FASymbol.Alert },
+                    Buttons = {
+                        FATaskDialogButton.OKButton
+                    }
+                };
+
+                var errorDialog = dialog as ErrorDialog;
+                if (errorDialog != null)
+                {
+                    taskDialog.FooterVisibility = FATaskDialogFooterVisibility.Always;
+                    taskDialog.Footer = errorDialog.Exception?.Message;
+                    taskDialog.IconSource = new FASymbolIconSource { Symbol = FASymbol.ReportHacked };
                 }
-            };
-
-            var errorDialog = dialog as ErrorDialog;
-            if (errorDialog != null)
-            {
-                taskDialog.FooterVisibility = FATaskDialogFooterVisibility.Always;
-                taskDialog.Footer = errorDialog.Exception?.Message;
-                taskDialog.IconSource = new FASymbolIconSource { Symbol = FASymbol.ReportHacked };
-            }
-
-            taskDialog.XamlRoot = windowManager.GetFirstOpenedWindow();
-            await taskDialog.ShowAsync();
+                
+                var currentWindow = windowManager.GetFirstOpenedWindow();
+                taskDialog.XamlRoot = currentWindow;
+                await taskDialog.ShowAsync();
+            });
         }
     }
 }

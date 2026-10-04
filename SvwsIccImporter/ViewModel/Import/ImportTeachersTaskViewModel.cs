@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SvwsClient.Tool;
 
 namespace SvwsIccImporter.ViewModel.Import
 {
@@ -29,7 +30,7 @@ namespace SvwsIccImporter.ViewModel.Import
                 CurrentStatus = TaskStatus.Running;
                 var client = restClientFactory.GetClient();
 
-                BusyText = "Lade Fächer aus der SVWS-Datenbank";
+                BusyText = "Lade Lehrkräfte aus der SVWS-Datenbank";
                 var faecher = (await client.GetFaecherAsync(settingsManager.Settings.Svws.Schema)).ToDictionary(x => x.Kuerzel);
 
                 BusyText = "Lade Lehrbefähigungen aus SVWS-Datenbank";
@@ -43,8 +44,23 @@ namespace SvwsIccImporter.ViewModel.Import
                     teachers = teachers.Where(x => x.IstSichtbar).ToList();
                 }
 
-                BusyText = $"Transformiere {teachers.Count} Lehrkräfte für den ICC-Import";
+                var personaldatenRequests = new List<Func<Task<LehrerPersonaldaten>>>();
+                var stammdatenRequests = new List<Func<Task<LehrerStammdaten>>>();
 
+                foreach (var teacher in teachers)
+                {
+                    personaldatenRequests.Add(() => client.GetLehrerPersonaldatenAsync(settingsManager.Settings.Svws.Schema, teacher.Id));
+                    stammdatenRequests.Add(() => client.GetLehrerStammdatenAsync(settingsManager.Settings.Svws.Schema, teacher.Id));
+                }
+
+                BusyText = $"Lade Personaldaten für {teachers.Count} Lehrkräfte";
+                var personaldatenListe = await BatchRequest.SendRequestAsync(personaldatenRequests);
+
+                BusyText = $"Lade Stammdaten für {teachers.Count} Lehrkräfte";
+                var stammdatenListe = await BatchRequest.SendRequestAsync(stammdatenRequests);
+                
+                
+                BusyText = $"Transformiere {teachers.Count} Lehrkräfte für den ICC-Import";
                 var iccTeachers = new List<TeacherData>();
                 var idx = 0;
 
@@ -53,8 +69,13 @@ namespace SvwsIccImporter.ViewModel.Import
                     idx++;
 
                     BusyText = $"Lade Personaldaten für {teacher.Kuerzel} ({idx}/{teachers.Count})";
-                    var personaldaten = await client.GetLehrerPersonaldatenAsync(settingsManager.Settings.Svws.Schema, teacher.Id);
+                    var personaldaten = personaldatenListe.FirstOrDefault(x => x.Id == teacher.Id);
 
+                    if (personaldaten == null)
+                    {
+                        continue;
+                    }
+                    
                     if(!personaldaten.Abschnittsdaten.Any(x => x.IdSchuljahresabschnitt == abschnitt.Id))
                     {
                         // Lehrkraft ist dem aktuellen Abschnitt nicht zugeordnet
@@ -62,8 +83,13 @@ namespace SvwsIccImporter.ViewModel.Import
                     }
 
                     BusyText = $"Lade Stammdaten für {teacher.Kuerzel} ({idx}/{teachers.Count})";
-                    var stammdaten = await client.GetLehrerStammdatenAsync(settingsManager.Settings.Svws.Schema, teacher.Id);
+                    var stammdaten = stammdatenListe.FirstOrDefault(x => x.Id == teacher.Id);
 
+                    if (stammdaten == null)
+                    {
+                        continue;
+                    }
+                    
                     var subjects = new List<string>();
 
                     foreach(var l in personaldaten.Lehraemter)
@@ -111,7 +137,7 @@ namespace SvwsIccImporter.ViewModel.Import
             }
             catch (Exception ex)
             {
-                dialogHelper.ShowAsync(
+                await dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",

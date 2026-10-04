@@ -76,7 +76,7 @@ namespace SvwsIccImporter.ViewModel.Import
             }
             catch (Exception ex)
             {
-                dialogHelper.ShowAsync(
+                await dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",

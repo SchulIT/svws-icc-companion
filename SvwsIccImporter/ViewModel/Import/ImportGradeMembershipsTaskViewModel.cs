@@ -30,7 +30,9 @@ namespace SvwsIccImporter.ViewModel.Import
                 BusyText = "Lade Lernende aus der SVWS-Datenbank";
 
                 var client = restClientFactory.GetClient();
-                var klassenListe = await client.GetKlassenFuerAbschnittAsync(settingsManager.Settings.Svws.Schema, abschnitt.Id);
+                var klassenListe =
+                    await client.GetListKlassenDatenBySchuljahresabschnittAsync(settingsManager.Settings.Svws.Schema,
+                        abschnitt.Id);
 
                 BusyText = $"Transformiere Klassenmitgliedschaften für den ICC-Import";
                 var data = new List<GradeMembershipData>();
@@ -51,13 +53,15 @@ namespace SvwsIccImporter.ViewModel.Import
                 }).ConfigureAwait(false);
 
                 BusyText = "Importe ins ICC";
-                var response = await importer.ImportGradeMembershipsAsync(data, (int)abschnitt.Abschnitt, (int)abschnitt.Schuljahr);
+                var response =
+                    await importer.ImportGradeMembershipsAsync(data, (int)abschnitt.Abschnitt,
+                        (int)abschnitt.Schuljahr);
 
                 return HandleResponse(response, dialogHelper);
             }
             catch (Exception ex)
             {
-                dialogHelper.ShowAsync(
+                await dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",

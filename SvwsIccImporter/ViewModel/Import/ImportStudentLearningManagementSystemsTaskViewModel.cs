@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Schema;
+using SvwsClient.Tool;
 
 namespace SvwsIccImporter.ViewModel.Import
 {
@@ -34,14 +36,22 @@ namespace SvwsIccImporter.ViewModel.Import
                 var schuelerListeAktuellerAbschnitt = schuelerListe.Where(x => x.IdSchuljahresabschnitt == abschnitt.Id).ToArray();
                 var schuelerCount = schuelerListeAktuellerAbschnitt.Count();
 
-                BusyText = $"Transformiere {schuelerCount} Lernende für den ICC-Import";
+                BusyText = $"Lade Lernplattform-Informationen für {schuelerCount} Kind(er)";
+                var einwilligungenRequests = new List<Func<Task<ICollection<SchuelerLernplattform>>>>();
+                foreach (var schueler in schuelerListeAktuellerAbschnitt)
+                {
+                    einwilligungenRequests.Add(() => client.GetSchuelerLernplattformenAsync(settingsManager.Settings.Svws.Schema, schueler.Id));
+                }
 
+                var alleEinwilligungen = await BatchRequest.SendRequestAsync(einwilligungenRequests);
+                var einwilligungenListe = alleEinwilligungen.SelectMany(x => x).ToList();
+                
+                BusyText = $"Transformiere {schuelerCount} Lernende für den ICC-Import";
                 var data = new List<StudentLearningManagementSystemData>();
-                var idx = 0;
 
                 foreach(var schueler in schuelerListeAktuellerAbschnitt)
                 {
-                    var einwilligungen = await client.GetSchuelerLernplattformenAsync(settingsManager.Settings.Svws.Schema, schueler.Id);
+                    var einwilligungen = einwilligungenListe.Where(x => x.IdSchueler == schueler.Id);
 
                     foreach(var einwilligung in einwilligungen)
                     {
@@ -57,10 +67,6 @@ namespace SvwsIccImporter.ViewModel.Import
                             IsVideoConsented = einwilligung.EinwilligungVideokonferenz
                         });
                     }
-
-                    idx++;
-
-                    BusyText = $"Transformiere {schuelerCount} Lernende für den ICC-Import ({idx}/{schuelerCount})";
                 }
 
                 data = data
@@ -75,7 +81,7 @@ namespace SvwsIccImporter.ViewModel.Import
             }
             catch (Exception ex)
             {
-                dialogHelper.ShowAsync(
+                await dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",

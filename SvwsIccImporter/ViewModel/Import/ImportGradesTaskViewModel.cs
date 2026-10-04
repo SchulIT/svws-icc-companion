@@ -29,22 +29,22 @@ namespace SvwsIccImporter.ViewModel.Import
                 BusyText = "Lade Klassen aus SVWS-Datenbank";
 
                 var client = restClientFactory.GetClient();
-                var klassenListe = await client.GetKlassenFuerAbschnittAsync(settingsManager.Settings.Svws.Schema, abschnitt.Id);
+                var klassenListe = await client.GetListKlassenListeEintragBySchuljahresabschnittAsync(settingsManager.Settings.Svws.Schema, abschnitt.Id);
 
                 BusyText = $"Transformiere {klassenListe.Count} für den ICC-Import";
 
                 var data = await Task.Run(() =>
                 {
-                    return klassenListe.Select(g =>
-                    { 
-                        return new GradeData
+                    return klassenListe.Where(x => x.AnzahlZugeordneteSchueler > 0).Select(g =>
                         {
-                            Id = g.Kuerzel.Cleanup(),
-                            Name = g.Kuerzel.Cleanup(),
-                        };
-                    })
-                    .Where(x => !string.IsNullOrEmpty(x.Id) && !string.IsNullOrEmpty(x.Name))
-                    .ToList();
+                            return new GradeData
+                            {
+                                Id = g.Kuerzel.Cleanup(),
+                                Name = g.Kuerzel.Cleanup(),
+                            };
+                        })
+                        .Where(x => !string.IsNullOrEmpty(x.Id) && !string.IsNullOrEmpty(x.Name))
+                        .ToList();
                 }).ConfigureAwait(false);
 
                 BusyText = "Importiere ins ICC";
@@ -54,7 +54,7 @@ namespace SvwsIccImporter.ViewModel.Import
             }
             catch (Exception ex)
             {
-                dialogHelper.ShowAsync(
+                await dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",

@@ -32,7 +32,7 @@ namespace SvwsIccImporter.ViewModel.Import
                 BusyText = "Lade Lehrkräfte aus der SVWS-Datenbank";
                 var lehrerListe = await client.GetLehrerAsync(settingsManager.Settings.Svws.Schema);
 
-                if(settingsManager.Settings.Svws.OnlyVisible)
+                if (settingsManager.Settings.Svws.OnlyVisible)
                 {
                     lehrerListe = lehrerListe.Where(x => x.IstSichtbar).ToList();
                 }
@@ -40,18 +40,18 @@ namespace SvwsIccImporter.ViewModel.Import
                 var lehrkraefte = lehrerListe.ToDictionary(x => x.Id);
 
                 BusyText = "Lade Klassenleitungen aus der SVWS-Datenbank";
-                var klassenListe = await client.GetKlassenFuerAbschnittAsync(settingsManager.Settings.Svws.Schema, abschnitt.Id);       
+                var klassenListe = await client.GetListKlassenDatenBySchuljahresabschnittAsync(settingsManager.Settings.Svws.Schema, abschnitt.Id);
 
                 BusyText = $"Transformiere Klassenleitungen für den ICC-Import";
                 var data = new List<GradeTeacherData>();
 
                 await Task.Run(() =>
                 {
-                    foreach(var klasse in klassenListe)
+                    foreach (var klasse in klassenListe.Where(x => x.Schueler.Count > 0))
                     {
                         foreach (var l in klasse.KlassenLeitungen)
                         {
-                            if(!lehrkraefte.ContainsKey(l))
+                            if (!lehrkraefte.ContainsKey(l))
                             {
                                 continue;
                             }
@@ -67,13 +67,14 @@ namespace SvwsIccImporter.ViewModel.Import
                 }).ConfigureAwait(false);
 
                 BusyText = "Importe ins ICC";
-                var response = await importer.ImportGradeTeachersAsync(data, (int)abschnitt.Abschnitt, (int)abschnitt.Schuljahr);
+                var response =
+                    await importer.ImportGradeTeachersAsync(data, (int)abschnitt.Abschnitt, (int)abschnitt.Schuljahr);
 
                 return HandleResponse(response, dialogHelper);
             }
             catch (Exception ex)
             {
-                dialogHelper.ShowAsync(
+                await dialogHelper.ShowAsync(
                     new ErrorDialog
                     {
                         Title = "Fehler",
