@@ -14,16 +14,16 @@ namespace SvwsIccImporter.ViewModel
         #region Properties
 
         [ObservableProperty]
-        private string busyText = string.Empty;
+        public partial string BusyText { get; private set; } = string.Empty;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(TestConnectionCommand))]
         [NotifyCanExecuteChangedFor(nameof(SaveSettingsCommand))]
-        private bool isBusy = false;
+        public partial bool IsBusy { get; private set; } = false;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveSettingsCommand))]
-        private bool isSuccessfulConfig = false;
+        public partial bool IsSuccessfulConfig { get; private set; } = false;
 
         public SettingsForm Settings { get; } = new SettingsForm();
 
@@ -120,7 +120,7 @@ namespace SvwsIccImporter.ViewModel
                     {
                         var stammdaten = await client.GetSchuleStammdatenAsync(Settings.SvwsSchema);
 
-                        dialogHelper.ShowAsync(new Dialog
+                        await dialogHelper.ShowAsync(new Dialog
                         {
                             Icon = Icon.ShieldSuccessGreenBar,
                             Title = "Erfolg",
@@ -131,7 +131,7 @@ namespace SvwsIccImporter.ViewModel
                     }
                     catch (Exception e)
                     {
-                        dialogHelper.ShowAsync(new ErrorDialog
+                        await dialogHelper.ShowAsync(new ErrorDialog
                         {
                             Title = "Fehler",
                             Header = "Verbindungsfehler",

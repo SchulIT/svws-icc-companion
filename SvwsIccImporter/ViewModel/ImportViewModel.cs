@@ -22,16 +22,16 @@ namespace SvwsIccImporter.ViewModel
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ImportCommand))]
         [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
-        private bool isBusy = false;
+        public partial bool IsBusy { get; protected set; }
 
         [ObservableProperty]
-        private string busyText = string.Empty;
+        public partial string BusyText { get; protected set; } = string.Empty;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ImportCommand))]
-        public Schuljahresabschnitt? selectedSection = null;
+        public partial Schuljahresabschnitt? SelectedSection { get; set; } = null;
 
-        public ObservableCollection<Schuljahresabschnitt> Sections { get; } = new ObservableCollection<Schuljahresabschnitt>();
+        public ObservableCollection<Schuljahresabschnitt> Sections { get; } = [];
 
         public ImportGradeMembershipsTaskViewModel GradeMembershipsViewModel { get { return importViewModels.Where(x => x is ImportGradeMembershipsTaskViewModel).Cast<ImportGradeMembershipsTaskViewModel>().First(); } }
         public ImportGradesTaskViewModel GradesViewModel { get { return importViewModels.Where(x => x is ImportGradesTaskViewModel).Cast<ImportGradesTaskViewModel>().First(); } }

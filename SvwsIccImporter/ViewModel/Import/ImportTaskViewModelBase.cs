@@ -12,16 +12,16 @@ namespace SvwsIccImporter.ViewModel.Import
     public abstract partial class ImportTaskViewModelBase : ObservableRecipient, IImportTaskViewModel
     { 
         [ObservableProperty]
-        private TaskStatus currentStatus = TaskStatus.None;
+        public partial TaskStatus CurrentStatus { get; set; } = TaskStatus.None;
 
         [ObservableProperty]
-        private string busyText = string.Empty;
+        public partial string BusyText { get; protected set; } = string.Empty;
 
         [ObservableProperty]
-        private bool isEnabled = false;
+        public partial bool IsEnabled { get; protected set; } = false;
 
         [ObservableProperty]
-        private string errorMessage = string.Empty;
+        public partial string ErrorMessage { get; protected set; } = string.Empty;
 
         protected readonly IDialogHelper dialogHelper;
         protected readonly IRestClientFactory restClientFactory;

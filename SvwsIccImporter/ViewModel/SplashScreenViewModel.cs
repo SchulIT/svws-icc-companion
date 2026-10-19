@@ -11,7 +11,7 @@ namespace SvwsIccImporter.ViewModel
     public partial class SplashScreenViewModel : ObservableRecipient
     {
         [ObservableProperty]
-        private string progressText = string.Empty;
+        public partial string ProgressText { get; private set; } = string.Empty;
 
         #region Services
 
