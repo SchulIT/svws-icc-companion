@@ -10,7 +10,7 @@
             "property": "AssemblyName"
         },
         "ApplicationName": "SVWS ICC Importer",
-        "Version": "1.0.0",
+        "Version": "1.1.0",
         "Icon": "Assets/icon.png",
         "Company": "SchulIT"
     },
@@ -20,6 +20,9 @@
         "CreateBinSymlink": "True"
     },
     "Win32Settings": {
+        "InstallerIcon": "Assets/icon.png",
+        "CompanyFolder": "True",
+        "InstallerLicense": "../LICENSE",
         "IncludeUninstaller": "True"
     },
     "MacOsSettings": {
