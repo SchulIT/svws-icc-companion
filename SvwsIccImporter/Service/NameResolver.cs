@@ -12,7 +12,7 @@ namespace SvwsIccImporter.Service
                 return $"{unterricht.Fach.Kuerzel}-{string.Join('-', unterricht.Klassen.Select(x => x.Name).Distinct().OrderBy(x => x))}";
             }
 
-            return unterricht.KursBezeichnung;
+            return unterricht.KursName;
         }
     }
 }

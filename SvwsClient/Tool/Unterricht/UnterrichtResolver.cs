@@ -109,7 +109,8 @@ namespace SvwsClient.Tool.Unterricht
                 var unterricht = new Unterricht
                 {
                     KursId = kurs.Id,
-                    KursBezeichnung = kurs.BezeichnungZeugnis ?? kurs.Kuerzel,
+                    KursName = kurs.Kuerzel,
+                    KursBezeichnung = !string.IsNullOrEmpty(kurs.BezeichnungZeugnis) ? kurs.BezeichnungZeugnis : null,
                     IstSichtbar = kurs.IstSichtbar,
                     Fach = new Fach(kurs.IdFach, faecherDict[kurs.IdFach].Kuerzel),
                     Lehrkraefte = kurs.WeitereLehrer.Select(x => x.IdLehrer != null && lehrkraefteDict.ContainsKey(x.IdLehrer.Value) ? lehrkraefteDict[x.IdLehrer.Value] : null).Where(x => x != null).Select(x => new Lehrkraft(x.Id, x.Kuerzel, x.IstSichtbar)).ToList()

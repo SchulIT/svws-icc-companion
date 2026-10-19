@@ -11,6 +11,8 @@ namespace SvwsClient.Tool.Unterricht
         public List<Klasse> Klassen { get; set; } = new List<Klasse>();
 
         public long? KursId { get; set; }
+        
+        public string KursName { get; set; }
 
         public string KursBezeichnung { get; set; } = string.Empty;
 

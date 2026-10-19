@@ -59,6 +59,7 @@ namespace SvwsIccImporter.ViewModel.Import
                         {
                             Id = idResolver.ResolveIdForTuition(x).Cleanup(),
                             Name = nameResolver.ResolveName(x).Cleanup(),
+                            DisplayName = x.KursBezeichnung?.Cleanup(),
                             StudyGroup = idResolver.ResolveIdForStudyGroup(x).Cleanup(),
                             Teachers = x.Lehrkraefte.Select(x => x.Kuerzel.Cleanup()).Where(x => !string.IsNullOrEmpty(x)).ToList(),
                             Subject = x.Fach.Kuerzel.Cleanup()
