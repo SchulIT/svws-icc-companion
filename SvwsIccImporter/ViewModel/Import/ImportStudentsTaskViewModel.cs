@@ -67,7 +67,7 @@ namespace SvwsIccImporter.ViewModel.Import
                         Lastname = stammdaten.Nachname.Cleanup(),
                         Email = stammdaten.EmailSchule.Cleanup(),
                         Gender = stammdaten.Geschlecht.ToIccGender(),
-                        Status = stammdaten.Status.ToString(),
+                        Status = GetStatus(stammdaten.Status),
                         Birthday = stammdaten.Geburtsdatum.ToDateTime(),
                         ApprovedPrivacyCategories = datenschutzEinwilligungen.Where(x => x.Status == true).Select(x => x.IdEinwilligungsart.ToString()).ToList()
                     });
@@ -96,6 +96,21 @@ namespace SvwsIccImporter.ViewModel.Import
                 CurrentStatus = TaskStatus.Failure;
                 return false;
             }
+        }
+
+        private string GetStatus(int status)
+        {
+            return status switch
+            {
+                0 => "Neuaufnahme",
+                1 => "Warteliste",
+                2 => "Aktive",
+                3 => "Beurlaubt",
+                6 => "Externe",
+                8 => "Abitur",
+                9 => "Abgaenger",
+                _ => "Unbekannt"
+            };
         }
     }
 }
