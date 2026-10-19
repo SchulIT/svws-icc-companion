@@ -21,7 +21,7 @@ namespace SvwsIccImporter.ViewModel.Import
         private readonly IIdResolver idResolver;
 
         public ImportStudyGroupsTaskViewModel(ICachedUnterrichtResolver unterrichtResolver, INameResolver nameResolver, IIdResolver idResolver, IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager)
-            : base(dialogHelper, restClientFactory, importer, settingsManager)
+            : base(dialogHelper, restClientFactory, importer, settingsManager, "studygroups", "Lerngruppen")
         {
             this.unterrichtResolver = unterrichtResolver;
             this.nameResolver = nameResolver;

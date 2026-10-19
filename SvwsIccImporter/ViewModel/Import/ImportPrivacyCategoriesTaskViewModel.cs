@@ -17,9 +17,9 @@ namespace SvwsIccImporter.ViewModel.Import
     {
 
         public ImportPrivacyCategoriesTaskViewModel(IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager)
-            : base(dialogHelper, restClientFactory, importer, settingsManager)
+            : base(dialogHelper, restClientFactory, importer, settingsManager, "privacy_categories", "Datenschutzkategorien")
         {
-
+            
         }
 
         public override async Task<bool> RunAsync(Schuljahresabschnitt abschnitt)

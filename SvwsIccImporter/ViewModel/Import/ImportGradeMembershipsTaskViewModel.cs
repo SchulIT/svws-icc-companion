@@ -17,9 +17,9 @@ namespace SvwsIccImporter.ViewModel.Import
     {
 
         public ImportGradeMembershipsTaskViewModel(IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager)
-            : base(dialogHelper, restClientFactory, importer, settingsManager)
+            : base(dialogHelper, restClientFactory, importer, settingsManager, "grade_memberships", "Klassen-Mitgliedschaften")
         {
-
+            
         }
 
         public override async Task<bool> RunAsync(Schuljahresabschnitt abschnitt)

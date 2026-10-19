@@ -15,9 +15,9 @@ namespace SvwsIccImporter.ViewModel.Import
     public class ImportLearningManagementSystemsTaskViewModel : ImportTaskViewModelBase
     {
         public ImportLearningManagementSystemsTaskViewModel(IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager)
-            : base(dialogHelper, restClientFactory, importer, settingsManager)
+            : base(dialogHelper, restClientFactory, importer, settingsManager, "lms", "Lernplattformen")
         {
-
+            
         }
 
         public override async Task<bool> RunAsync(Schuljahresabschnitt abschnitt)

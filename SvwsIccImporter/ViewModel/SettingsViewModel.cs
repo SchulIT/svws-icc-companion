@@ -5,7 +5,11 @@ using SvwsIccImporter.Settings;
 using SvwsIccImporter.UI.Dialog;
 using SvwsIccImporter.ViewModel.Form;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using SvwsIccImporter.ViewModel.Import;
 
 namespace SvwsIccImporter.ViewModel
 {
@@ -27,6 +31,8 @@ namespace SvwsIccImporter.ViewModel
 
         public SettingsForm Settings { get; } = new SettingsForm();
 
+        public IEnumerable<IImportTaskViewModel> ImportViewModels { get; private set; }
+
         #endregion
 
         #region Commands
@@ -45,12 +51,13 @@ namespace SvwsIccImporter.ViewModel
 
         #endregion
 
-        public SettingsViewModel(ISettingsManager settingsManager, IDialogHelper dialogHelper, IHttpClientFactory httpClientFactory, IRestClientFactory restClientFactory)
+        public SettingsViewModel(ISettingsManager settingsManager, IDialogHelper dialogHelper, IHttpClientFactory httpClientFactory, IRestClientFactory restClientFactory, IEnumerable<IImportTaskViewModel> importViewModels)
         {
             this.settingsManager = settingsManager;
             this.dialogHelper = dialogHelper;
             this.httpClientFactory = httpClientFactory;
             this.restClientFactory = restClientFactory;
+            ImportViewModels = importViewModels;
 
             TestConnectionCommand = new AsyncRelayCommand(TestConnectionAsync, CanTest);
             SaveSettingsCommand = new AsyncRelayCommand(SaveAsync, CanSave);
@@ -84,6 +91,13 @@ namespace SvwsIccImporter.ViewModel
 
                 settings.Icc.Endpoint = Settings.IccEndpoint;
                 settings.Icc.Token = Settings.IccToken;
+                
+                settings.Importer.DisabledImporters.Clear();
+                
+                foreach(var disabledImporter in this.Settings.DisabledImporters)
+                {
+                    settings.Importer.DisabledImporters.Add(disabledImporter.Identifier);
+                }
 
                 await settingsManager.SaveSettingsAsync();
             }
@@ -166,6 +180,18 @@ namespace SvwsIccImporter.ViewModel
             Settings.SvwsPassword = settingsManager.Settings.Svws.Password;
             Settings.OnlyVisible = settingsManager.Settings.Svws.OnlyVisible;
             Settings.IgnoreCertificateWarnings = settingsManager.Settings.Svws.IgnoreCertificateWarnings;
+            
+            Settings.DisabledImporters.Clear();
+
+            foreach (var disabledImporterIdentifier in settingsManager.Settings.Importer.DisabledImporters)
+            {
+                var importViewModel = ImportViewModels.FirstOrDefault(x => x.Identifier == disabledImporterIdentifier);
+
+                if (importViewModel != null)
+                {
+                    Settings.DisabledImporters.Add(importViewModel);
+                }
+            }
         }
     }
 }

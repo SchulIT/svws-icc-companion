@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SvwsIccImporter.ViewModel.Import;
 
 namespace SvwsIccImporter.ViewModel.Form
 {
@@ -33,5 +35,7 @@ namespace SvwsIccImporter.ViewModel.Form
 
         [ObservableProperty]
         private bool ignoreCertificateWarnings = false;
+
+        public ObservableCollection<IImportTaskViewModel> DisabledImporters { get; } = [ ];
     }
 }

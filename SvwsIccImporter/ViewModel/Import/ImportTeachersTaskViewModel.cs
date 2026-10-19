@@ -18,9 +18,9 @@ namespace SvwsIccImporter.ViewModel.Import
     {
 
         public ImportTeachersTaskViewModel(IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager)
-            : base(dialogHelper, restClientFactory, importer, settingsManager)
+            : base(dialogHelper, restClientFactory, importer, settingsManager, "teachers", "Lehrkräfte")
         {
-
+            
         }
 
         public override async Task<bool> RunAsync(Schuljahresabschnitt abschnitt)

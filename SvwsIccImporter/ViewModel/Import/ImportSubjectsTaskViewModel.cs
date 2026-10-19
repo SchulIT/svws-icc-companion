@@ -16,9 +16,9 @@ namespace SvwsIccImporter.ViewModel.Import
     {
 
         public ImportSubjectsTaskViewModel(IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager)
-            : base(dialogHelper, restClientFactory, importer, settingsManager)
+            : base(dialogHelper, restClientFactory, importer, settingsManager, "subjects", "Fächer")
         {
-
+            
         }
 
         public override async Task<bool> RunAsync(Schuljahresabschnitt abschnitt)

@@ -20,7 +20,7 @@ namespace SvwsIccImporter.ViewModel.Import
 
 
         public ImportTuitionsTaskViewModel(ICachedUnterrichtResolver unterrichtResolver, INameResolver nameResolver, IIdResolver idResolver, IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager)
-            : base(dialogHelper, restClientFactory, importer, settingsManager)
+            : base(dialogHelper, restClientFactory, importer, settingsManager, "tuitions", "Unterrichte")
         {
             this.unterrichtResolver = unterrichtResolver;
             this.nameResolver = nameResolver;

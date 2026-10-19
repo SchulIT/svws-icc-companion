@@ -18,22 +18,48 @@ namespace SvwsIccImporter.ViewModel.Import
         public partial string BusyText { get; protected set; } = string.Empty;
 
         [ObservableProperty]
-        public partial bool IsEnabled { get; protected set; } = false;
+        public partial bool IsChecked { get; protected set; } = false;
 
         [ObservableProperty]
         public partial string ErrorMessage { get; protected set; } = string.Empty;
+
+        [ObservableProperty] 
+        public partial bool IsDisabled { get; protected set; } = false;
+
+        [ObservableProperty]
+        public partial string DisplayName { get; protected set; } = string.Empty;
+
+        [ObservableProperty] 
+        public partial string Identifier { get; protected set; } = string.Empty;
 
         protected readonly IDialogHelper dialogHelper;
         protected readonly IRestClientFactory restClientFactory;
         protected readonly IIccImporter importer;
         protected readonly ISettingsManager settingsManager;
 
-        public ImportTaskViewModelBase(IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager)
+        public ImportTaskViewModelBase(IDialogHelper dialogHelper, IRestClientFactory restClientFactory, IIccImporter importer, ISettingsManager settingsManager, string identifier, string displayName)
         {
             this.dialogHelper = dialogHelper;
             this.restClientFactory = restClientFactory;
             this.importer = importer;
             this.settingsManager = settingsManager;
+            
+            this.Identifier = identifier;
+            this.DisplayName = displayName;
+
+            CheckIfDisabled();
+            this.settingsManager.SettingsSaved += OnSettingsSaved;
+        }
+
+        private void OnSettingsSaved(ISettingsManager manager, SettingsSavedEventArgs args)
+        {
+            CheckIfDisabled();
+        }
+
+        private void CheckIfDisabled()
+        {
+            var disabled = settingsManager.Settings.Importer.DisabledImporters;
+            IsDisabled = disabled.Contains(Identifier);
         }
 
         public abstract Task<bool> RunAsync(Schuljahresabschnitt abschnitt);

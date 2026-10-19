@@ -10,8 +10,14 @@ namespace SvwsIccImporter.ViewModel.Import
 
         public string BusyText { get; }
 
-        public bool IsEnabled { get; }
+        public bool IsChecked { get; }
 
         public Task<bool> RunAsync(Schuljahresabschnitt abschnitt);
+        
+        public bool IsDisabled { get; }
+        
+        public string DisplayName { get; }
+        
+        public string Identifier { get; }
     }
 }

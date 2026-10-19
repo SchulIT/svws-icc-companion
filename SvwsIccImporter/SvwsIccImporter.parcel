@@ -1,0 +1,33 @@
+{
+    "GeneralSettings": {
+        "NetProjectPath": "SvwsIccImporter.csproj",
+        "PackageName": {
+            "$type": "msbuild",
+            "property": "AssemblyName"
+        },
+        "AssemblyName": {
+            "$type": "msbuild",
+            "property": "AssemblyName"
+        },
+        "ApplicationName": "SVWS ICC Importer",
+        "Version": "1.0.0",
+        "Icon": "Assets/icon.png",
+        "Company": "SchulIT"
+    },
+    "LinuxSettings": {
+        "AppIcon": "Assets/icon.png",
+        "DesktopCategory": "Education",
+        "CreateBinSymlink": "True"
+    },
+    "Win32Settings": {
+        "IncludeUninstaller": "True"
+    },
+    "MacOsSettings": {
+        "CreateBundle": true,
+        "BundleIdentifier": "com.SchulIT.SvwsIccImporter",
+        "SigningCredentialsType": "AdHoc"
+    },
+    "PublishSettings": {
+        "ExtraBuildProperties": {}
+    }
+}

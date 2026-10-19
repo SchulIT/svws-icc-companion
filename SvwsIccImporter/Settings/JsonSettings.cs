@@ -9,5 +9,8 @@ namespace SvwsIccImporter.Settings
 
         [JsonProperty("svws")]
         public ISvwsSettings Svws { get; } = new JsonSvwsSettings();
+        
+        [JsonProperty("importer")]
+        public IImporterSettings Importer { get; } = new JsonImporterSettings();
     }
 }

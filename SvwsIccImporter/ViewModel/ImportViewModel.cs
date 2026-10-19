@@ -92,7 +92,7 @@ namespace SvwsIccImporter.ViewModel
 
         private void ImportViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ImportTaskViewModelBase.IsEnabled))
+            if (e.PropertyName == nameof(ImportTaskViewModelBase.IsChecked))
             {
                 ImportCommand.NotifyCanExecuteChanged();
             }
@@ -141,7 +141,7 @@ namespace SvwsIccImporter.ViewModel
 
                 foreach (var viewModel in sortedTasks)
                 {
-                    if (!viewModel.IsEnabled)
+                    if (!viewModel.IsChecked)
                     {
                         viewModel.CurrentStatus = ViewModel.Import.TaskStatus.None;
                     }
@@ -151,9 +151,9 @@ namespace SvwsIccImporter.ViewModel
                     }
                 }
 
-                foreach (var viewModel in sortedTasks.Where(x => x.IsEnabled))
+                foreach (var viewModel in sortedTasks.Where(x => x.IsChecked))
                 {
-                    if(cts.IsCancellationRequested)
+                    if(cts.IsCancellationRequested || viewModel.IsDisabled)
                     {
                         return;
                     }
@@ -178,7 +178,7 @@ namespace SvwsIccImporter.ViewModel
             }
         }
 
-        private bool CanImport() => !IsBusy && SelectedSection != null && importViewModels.Any(x => x.IsEnabled);
+        private bool CanImport() => !IsBusy && SelectedSection != null && importViewModels.Any(x => x.IsChecked);
 
         private void Cancel()
         {

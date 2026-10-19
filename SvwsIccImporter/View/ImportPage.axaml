@@ -65,75 +65,147 @@
 
                     <local:ImportTask Grid.Row="1" Grid.Column="0"
                                      CheckboxLabel="Lehrkräfte"
-                                     IsEnabled="{Binding !IsBusy}"
-                                     IsImportEnabled="{Binding TeachersViewModel.IsEnabled, Mode=TwoWay}"
-                                     BusyText="{Binding TeachersViewModel.BusyText}" />
+                                     IsImportEnabled="{Binding TeachersViewModel.IsChecked, Mode=TwoWay}"
+                                     BusyText="{Binding TeachersViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="TeachersViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="1" Grid.Column="1"
                                       CheckboxLabel="Fächer"
-                                      IsEnabled="{Binding !IsBusy}"
-                                      IsImportEnabled="{Binding SubjectsViewModel.IsEnabled, Mode=TwoWay}"
-                                      BusyText="{Binding SubjectsViewModel.BusyText}" />
+                                      IsImportEnabled="{Binding SubjectsViewModel.IsChecked, Mode=TwoWay}"
+                                      BusyText="{Binding SubjectsViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="SubjectsViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="2" Grid.Column="0"
                                       CheckboxLabel="Klassen"
-                                      IsEnabled="{Binding !IsBusy}"
-                                      IsImportEnabled="{Binding GradesViewModel.IsEnabled, Mode=TwoWay}"
-                                      BusyText="{Binding GradesViewModel.BusyText}" />
+                                      IsImportEnabled="{Binding GradesViewModel.IsChecked, Mode=TwoWay}"
+                                      BusyText="{Binding GradesViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="GradesViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>    
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="2" Grid.Column="1"
                                     CheckboxLabel="Lernende"
-                                    IsEnabled="{Binding !IsBusy}"
-                                    IsImportEnabled="{Binding StudentsViewModel.IsEnabled, Mode=TwoWay}"
-                                    BusyText="{Binding StudentsViewModel.BusyText}" />
+                                    IsImportEnabled="{Binding StudentsViewModel.IsChecked, Mode=TwoWay}"
+                                    BusyText="{Binding StudentsViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="StudentsViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>    
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="3" Grid.Column="0"
                                             CheckboxLabel="Klassenleitungen"
-                                            IsEnabled="{Binding !IsBusy}"
-                                            IsImportEnabled="{Binding GradeTeachersViewModel.IsEnabled, Mode=TwoWay}"
-                                            BusyText="{Binding GradeTeachersViewModel.BusyText}" />
+                                            IsImportEnabled="{Binding GradeTeachersViewModel.IsChecked, Mode=TwoWay}"
+                                            BusyText="{Binding GradeTeachersViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="GradeTeachersViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>    
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="3" Grid.Column="1"
                                             CheckboxLabel="Klassenmitgliedschaften"
-                                            IsEnabled="{Binding !IsBusy}"
-                                            IsImportEnabled="{Binding GradeMembershipsViewModel.IsEnabled, Mode=TwoWay}"
-                                            BusyText="{Binding GradeMembershipsViewModel.BusyText}" />
+                                            IsImportEnabled="{Binding GradeMembershipsViewModel.IsChecked, Mode=TwoWay}"
+                                            BusyText="{Binding GradeMembershipsViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="GradeMembershipsViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="4" Grid.Column="0"
                                             CheckboxLabel="Lernplattformen"
-                                            IsEnabled="{Binding !IsBusy}"
-                                            IsImportEnabled="{Binding LmsViewModel.IsEnabled, Mode=TwoWay}"
-                                            BusyText="{Binding LmsViewModel.BusyText}" />
+                                            IsImportEnabled="{Binding LmsViewModel.IsChecked, Mode=TwoWay}"
+                                            BusyText="{Binding LmsViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="LmsViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>    
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="4" Grid.Column="1"
                                             CheckboxLabel="Schüler-Lernplattforminfos"
-                                            IsEnabled="{Binding !IsBusy}"
-                                            IsImportEnabled="{Binding StudentsLmsViewModel.IsEnabled, Mode=TwoWay}"
-                                            BusyText="{Binding StudentsLmsViewModel.BusyText}" />
+                                            IsImportEnabled="{Binding StudentsLmsViewModel.IsChecked, Mode=TwoWay}"
+                                            BusyText="{Binding StudentsLmsViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="StudentsLmsViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="5" Grid.Column="0"
                                             CheckboxLabel="Datenschutzkategorien"
-                                            IsEnabled="{Binding !IsBusy}"
-                                            IsImportEnabled="{Binding PrivacyCategoriesViewModel.IsEnabled, Mode=TwoWay}"
-                                            BusyText="{Binding PrivacyCategoriesViewModel.BusyText}" />
+                                            IsImportEnabled="{Binding PrivacyCategoriesViewModel.IsChecked, Mode=TwoWay}"
+                                            BusyText="{Binding PrivacyCategoriesViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="PrivacyCategoriesViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>    
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="5" Grid.Column="1"
                                             CheckboxLabel="Unterrichte"
-                                            IsEnabled="{Binding !IsBusy}"
-                                            IsImportEnabled="{Binding TuitionsViewModel.IsEnabled, Mode=TwoWay}"
-                                            BusyText="{Binding TuitionsViewModel.BusyText}" />
+                                            IsImportEnabled="{Binding TuitionsViewModel.IsChecked, Mode=TwoWay}"
+                                            BusyText="{Binding TuitionsViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="TuitionsViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>    
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="6" Grid.Column="0"
                                             CheckboxLabel="Lerngruppen"
-                                            IsEnabled="{Binding !IsBusy}"
-                                            IsImportEnabled="{Binding StudyGroupsViewModel.IsEnabled, Mode=TwoWay}"
-                                            BusyText="{Binding StudyGroupsViewModel.BusyText}" />
+                                            IsImportEnabled="{Binding StudyGroupsViewModel.IsChecked, Mode=TwoWay}"
+                                            BusyText="{Binding StudyGroupsViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="StudyGroupsViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>    
+                    </local:ImportTask>
 
                     <local:ImportTask Grid.Row="6" Grid.Column="1"
                                             CheckboxLabel="Lerngruppen-Mitgliedschaften"
-                                            IsEnabled="{Binding !IsBusy}"
-                                            IsImportEnabled="{Binding StudyGroupMembershipsViewModel.IsEnabled, Mode=TwoWay}"
-                                            BusyText="{Binding StudyGroupMembershipsViewModel.BusyText}" />
+                                            IsImportEnabled="{Binding StudyGroupMembershipsViewModel.IsChecked, Mode=TwoWay}"
+                                            BusyText="{Binding StudyGroupMembershipsViewModel.BusyText}">
+                        <local:ImportTask.IsEnabled>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="IsBusy" Converter="{x:Static BoolConverters.Not}"></Binding>
+                                <Binding Path="StudyGroupMembershipsViewModel.IsDisabled" Converter="{x:Static BoolConverters.Not}"></Binding>
+                            </MultiBinding>
+                        </local:ImportTask.IsEnabled>    
+                    </local:ImportTask>
 
                  </Grid>
              </ScrollViewer>

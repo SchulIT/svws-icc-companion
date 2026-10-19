@@ -70,18 +70,18 @@
                      <controls:FASettingsExpander IsExpanded="True" Margin="0,0,0,10">
                          <controls:FASettingsExpander.Header>
                              <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                                 <Grid.ColumnDefinitions>
+                                     <ColumnDefinition Width="*" />
+                                     <ColumnDefinition Width="Auto" />
+                                     <ColumnDefinition Width="Auto" />
+                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock VerticalAlignment="Center">ICC-Einstellungen</TextBlock>
+                                 <TextBlock VerticalAlignment="Center">ICC-Einstellungen</TextBlock>
 
-                                <Button Grid.Column="2"  Margin="0,0,10,0" Command="{Binding SaveSettingsCommand}">
-                                    Einstellungen speichern
-                                </Button>
-                            </Grid>
+                                 <Button Grid.Column="2"  Margin="0,0,10,0" Command="{Binding SaveSettingsCommand}">
+                                     Einstellungen speichern
+                                 </Button>
+                             </Grid>
                          </controls:FASettingsExpander.Header>
 
                          <controls:FASettingsExpanderItem Content="Server-URL">
@@ -93,6 +93,38 @@
                          <controls:FASettingsExpanderItem Content="Import Token">
                              <controls:FASettingsExpanderItem.Footer>
                                  <TextBox Grid.Column="1" Text="{Binding Settings.IccToken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="300"/>
+                             </controls:FASettingsExpanderItem.Footer>
+                         </controls:FASettingsExpanderItem>
+                     </controls:FASettingsExpander>
+                     
+                     <controls:FASettingsExpander IsExpanded="True" Margin="0,0,0,10">
+                         <controls:FASettingsExpander.Header>
+                             <Grid>
+                                 <Grid.ColumnDefinitions>
+                                     <ColumnDefinition Width="*" />
+                                     <ColumnDefinition Width="Auto" />
+                                     <ColumnDefinition Width="Auto" />
+                                 </Grid.ColumnDefinitions>
+
+                                 <TextBlock VerticalAlignment="Center">Importer-Einstellungen</TextBlock>
+
+                                 <Button Grid.Column="2"  Margin="0,0,10,0" Command="{Binding SaveSettingsCommand}">
+                                     Einstellungen speichern
+                                 </Button>
+                             </Grid>
+                         </controls:FASettingsExpander.Header>
+
+                         <controls:FASettingsExpanderItem Content="Deaktiverte Importer">
+                             <controls:FASettingsExpanderItem.Footer>
+                                 <ListBox ItemsSource="{Binding ImportViewModels}"
+                                          SelectionMode="Multiple"
+                                          SelectedItems="{Binding Settings.DisabledImporters, Mode=TwoWay}">
+                                     <ListBox.ItemTemplate>
+                                         <DataTemplate>
+                                             <TextBlock Text="{Binding DisplayName}"></TextBlock>
+                                         </DataTemplate>
+                                     </ListBox.ItemTemplate>
+                                 </ListBox>
                              </controls:FASettingsExpanderItem.Footer>
                          </controls:FASettingsExpanderItem>
                      </controls:FASettingsExpander>
