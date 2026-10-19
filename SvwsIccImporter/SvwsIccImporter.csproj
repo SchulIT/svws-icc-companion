@@ -12,10 +12,16 @@
     <Authors>Marcel Marnitz</Authors>
     <Product>SVWS ICC Importer</Product>
     <NeutralLanguage>de</NeutralLanguage>
+    <PackageIcon>icon.png</PackageIcon>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +46,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SvwsClient\SvwsClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
