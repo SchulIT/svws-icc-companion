@@ -65,7 +65,7 @@
 
                     <local:ImportTask Grid.Row="1" Grid.Column="0"
                                      CheckboxLabel="Lehrkräfte"
-                                     IsImportEnabled="{Binding TeachersViewModel.IsChecked, Mode=TwoWay}"
+                                     IsChecked="{Binding TeachersViewModel.IsChecked, Mode=TwoWay}"
                                      BusyText="{Binding TeachersViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -77,7 +77,7 @@
 
                     <local:ImportTask Grid.Row="1" Grid.Column="1"
                                       CheckboxLabel="Fächer"
-                                      IsImportEnabled="{Binding SubjectsViewModel.IsChecked, Mode=TwoWay}"
+                                      IsChecked="{Binding SubjectsViewModel.IsChecked, Mode=TwoWay}"
                                       BusyText="{Binding SubjectsViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -89,7 +89,7 @@
 
                     <local:ImportTask Grid.Row="2" Grid.Column="0"
                                       CheckboxLabel="Klassen"
-                                      IsImportEnabled="{Binding GradesViewModel.IsChecked, Mode=TwoWay}"
+                                      IsChecked="{Binding GradesViewModel.IsChecked, Mode=TwoWay}"
                                       BusyText="{Binding GradesViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -101,7 +101,7 @@
 
                     <local:ImportTask Grid.Row="2" Grid.Column="1"
                                     CheckboxLabel="Lernende"
-                                    IsImportEnabled="{Binding StudentsViewModel.IsChecked, Mode=TwoWay}"
+                                    IsChecked="{Binding StudentsViewModel.IsChecked, Mode=TwoWay}"
                                     BusyText="{Binding StudentsViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -113,7 +113,7 @@
 
                     <local:ImportTask Grid.Row="3" Grid.Column="0"
                                             CheckboxLabel="Klassenleitungen"
-                                            IsImportEnabled="{Binding GradeTeachersViewModel.IsChecked, Mode=TwoWay}"
+                                            IsChecked="{Binding GradeTeachersViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding GradeTeachersViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -125,7 +125,7 @@
 
                     <local:ImportTask Grid.Row="3" Grid.Column="1"
                                             CheckboxLabel="Klassenmitgliedschaften"
-                                            IsImportEnabled="{Binding GradeMembershipsViewModel.IsChecked, Mode=TwoWay}"
+                                            IsChecked="{Binding GradeMembershipsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding GradeMembershipsViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -137,7 +137,7 @@
 
                     <local:ImportTask Grid.Row="4" Grid.Column="0"
                                             CheckboxLabel="Lernplattformen"
-                                            IsImportEnabled="{Binding LmsViewModel.IsChecked, Mode=TwoWay}"
+                                            IsChecked="{Binding LmsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding LmsViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -149,7 +149,7 @@
 
                     <local:ImportTask Grid.Row="4" Grid.Column="1"
                                             CheckboxLabel="Schüler-Lernplattforminfos"
-                                            IsImportEnabled="{Binding StudentsLmsViewModel.IsChecked, Mode=TwoWay}"
+                                            IsChecked="{Binding StudentsLmsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding StudentsLmsViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -161,7 +161,7 @@
 
                     <local:ImportTask Grid.Row="5" Grid.Column="0"
                                             CheckboxLabel="Datenschutzkategorien"
-                                            IsImportEnabled="{Binding PrivacyCategoriesViewModel.IsChecked, Mode=TwoWay}"
+                                            IsChecked="{Binding PrivacyCategoriesViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding PrivacyCategoriesViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -173,7 +173,7 @@
 
                     <local:ImportTask Grid.Row="5" Grid.Column="1"
                                             CheckboxLabel="Unterrichte"
-                                            IsImportEnabled="{Binding TuitionsViewModel.IsChecked, Mode=TwoWay}"
+                                            IsChecked="{Binding TuitionsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding TuitionsViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -185,7 +185,7 @@
 
                     <local:ImportTask Grid.Row="6" Grid.Column="0"
                                             CheckboxLabel="Lerngruppen"
-                                            IsImportEnabled="{Binding StudyGroupsViewModel.IsChecked, Mode=TwoWay}"
+                                            IsChecked="{Binding StudyGroupsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding StudyGroupsViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -197,7 +197,7 @@
 
                     <local:ImportTask Grid.Row="6" Grid.Column="1"
                                             CheckboxLabel="Lerngruppen-Mitgliedschaften"
-                                            IsImportEnabled="{Binding StudyGroupMembershipsViewModel.IsChecked, Mode=TwoWay}"
+                                            IsChecked="{Binding StudyGroupMembershipsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding StudyGroupMembershipsViewModel.BusyText}">
                         <local:ImportTask.IsEnabled>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">

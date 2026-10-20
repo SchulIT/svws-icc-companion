@@ -14,12 +14,12 @@ namespace SvwsIccImporter.View
             set { SetValue(CheckboxLabelProperty, value); }
         }
 
-        public static readonly StyledProperty<bool> IsImportEnabledProperty = AvaloniaProperty.Register<ImportTask, bool>(nameof(IsImportEnabled));
+        public static readonly StyledProperty<bool> IsCheckedProperty = AvaloniaProperty.Register<ImportTask, bool>(nameof(IsChecked));
 
-        public bool IsImportEnabled
+        public bool IsChecked
         {
-            get { return GetValue(IsImportEnabledProperty); }
-            set { SetValue(IsImportEnabledProperty, value); }
+            get { return GetValue(IsCheckedProperty); }
+            set { SetValue(IsCheckedProperty, value); }
         }
 
         public static readonly StyledProperty<string?> BusyTextProperty = AvaloniaProperty.Register<ImportTask, string?>(nameof(BusyText));

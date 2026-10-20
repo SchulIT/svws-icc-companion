@@ -13,7 +13,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
         
-                <CheckBox IsChecked="{Binding #root.IsImportEnabled}" Content="{Binding #root.CheckboxLabel}" />
+                <CheckBox IsChecked="{Binding #root.IsChecked}" Content="{Binding #root.CheckboxLabel}" />
                 <TextBlock Text="{Binding #root.BusyText}" Grid.Row="1"/>
              </Grid>
 </UserControl>
