@@ -18,7 +18,7 @@ namespace SvwsIccImporter.ViewModel.Import
         public partial string BusyText { get; protected set; } = string.Empty;
 
         [ObservableProperty]
-        public partial bool IsChecked { get; protected set; } = false;
+        public partial bool IsChecked { get; set; } = false;
 
         [ObservableProperty]
         public partial string ErrorMessage { get; protected set; } = string.Empty;
