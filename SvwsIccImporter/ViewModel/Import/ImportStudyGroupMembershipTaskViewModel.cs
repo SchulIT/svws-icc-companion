@@ -6,6 +6,7 @@ using SvwsIccImporter.Service;
 using SvwsIccImporter.Settings;
 using SvwsIccImporter.UI.Dialog;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,10 +48,31 @@ namespace SvwsIccImporter.ViewModel.Import
                     // no need to filter for teachers as they are not relevant in this import
                 }
 
+                BusyText = "Lade Klassenmitgliedschaften aus SVWS-Datenbank";
+                var grades = await restClientFactory.GetClient()
+                    .GetListKlassenDatenBySchuljahresabschnittAsync(settingsManager.Settings.Svws.Schema,
+                        abschnitt.Id);
+                
                 BusyText = $"Transformiere Unterrichte für den ICC-Import";
 
                 var memberships = await Task.Run(() =>
                 {
+                    var gradeMemberships = new List<StudyGroupMembershipData>();
+                    
+                    // KLASSEN
+                    foreach (var grade in grades)
+                    {
+                        foreach (var kind in grade.Schueler)
+                        {
+                            gradeMemberships.Add(new StudyGroupMembershipData
+                            {
+                                Student = kind.Id.ToString(),
+                                StudyGroup = grade.Kuerzel.Cleanup()
+                            });
+                        }
+                    }
+                    
+                    // KURSE
                     return tuitions
                         .SelectMany(t =>
                         {
@@ -65,6 +87,7 @@ namespace SvwsIccImporter.ViewModel.Import
                             });
                         })
                         .Where(x => !string.IsNullOrEmpty(x.Student) && !string.IsNullOrEmpty(x.StudyGroup))
+                        .Union(gradeMemberships)
                         .DistinctBy(x => string.Join('-', x.Student, x.StudyGroup))
                         .ToList();
                 }).ConfigureAwait(false);
