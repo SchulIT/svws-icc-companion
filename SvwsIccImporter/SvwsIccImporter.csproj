@@ -14,9 +14,9 @@
     <NeutralLanguage>de</NeutralLanguage>
     <PackageIcon>icon.png</PackageIcon>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.1.1</AssemblyVersion>
-    <FileVersion>1.1.1</FileVersion>
-    <Version>1.1.1</Version>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
+    <FileVersion>1.1.2</FileVersion>
+    <Version>1.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
