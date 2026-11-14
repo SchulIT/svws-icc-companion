@@ -45,8 +45,9 @@ namespace SvwsIccImporter.ViewModel
         public ImportSubjectsTaskViewModel SubjectsViewModel { get { return importViewModels.Where(x => x is ImportSubjectsTaskViewModel).Cast<ImportSubjectsTaskViewModel>().First(); } }
         public ImportTeachersTaskViewModel TeachersViewModel { get { return importViewModels.Where(x => x is ImportTeachersTaskViewModel).Cast<ImportTeachersTaskViewModel>().First(); } }
         public ImportTuitionsTaskViewModel TuitionsViewModel { get { return importViewModels.Where(x => x is ImportTuitionsTaskViewModel).Cast<ImportTuitionsTaskViewModel>().First(); } }
-
-
+        
+        public SvwsViewModel SvwsViewModel { get;  }
+        
         #endregion
 
         private CancellationTokenSource? cts;
@@ -68,12 +69,13 @@ namespace SvwsIccImporter.ViewModel
 
         #endregion
 
-        public ImportViewModel(IRestClientFactory restClientFactory, ISettingsManager settingsManager, IIccImporterConfigurator importConfigurator, IEnumerable<IImportTaskViewModel> importViewModels)
+        public ImportViewModel(IRestClientFactory restClientFactory, ISettingsManager settingsManager, IIccImporterConfigurator importConfigurator, IEnumerable<IImportTaskViewModel> importViewModels, SvwsViewModel svwsViewModel)
         {
             this.restClientFactory = restClientFactory;
             this.settingsManager = settingsManager;
             this.importConfigurator = importConfigurator;
             this.importViewModels = importViewModels;
+            SvwsViewModel = svwsViewModel;
 
             ObserveImportModels();
 

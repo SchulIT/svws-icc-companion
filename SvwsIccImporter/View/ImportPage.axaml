@@ -27,7 +27,9 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <controls:FACommandBar Grid.ColumnSpan="2">
+                    <controls:FAInfoBar Grid.ColumnSpan="2" Severity="Error" Message="{Binding SvwsViewModel.UnsupportedServerVersionMessage}" IsOpen="{Binding SvwsViewModel.IsSupportedVersion, Converter={x:Static BoolConverters.Not}}" IsClosable="False"></controls:FAInfoBar>
+                     
+                    <controls:FACommandBar Grid.Row="1" Grid.ColumnSpan="2">
                         <controls:FACommandBar.PrimaryCommands>
                             <controls:FACommandBarElementContainer>
                                 <controls:FAComboBox ItemsSource="{Binding Sections}"
@@ -63,7 +65,7 @@
                         </controls:FACommandBar.PrimaryCommands>
                     </controls:FACommandBar>
 
-                    <local:ImportTask Grid.Row="1" Grid.Column="0"
+                    <local:ImportTask Grid.Row="2" Grid.Column="0"
                                      CheckboxLabel="Lehrkräfte"
                                      IsChecked="{Binding TeachersViewModel.IsChecked, Mode=TwoWay}"
                                      BusyText="{Binding TeachersViewModel.BusyText}">
@@ -75,7 +77,7 @@
                         </local:ImportTask.IsEnabled>
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="1" Grid.Column="1"
+                    <local:ImportTask Grid.Row="2" Grid.Column="1"
                                       CheckboxLabel="Fächer"
                                       IsChecked="{Binding SubjectsViewModel.IsChecked, Mode=TwoWay}"
                                       BusyText="{Binding SubjectsViewModel.BusyText}">
@@ -87,7 +89,7 @@
                         </local:ImportTask.IsEnabled>
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="2" Grid.Column="0"
+                    <local:ImportTask Grid.Row="3" Grid.Column="0"
                                       CheckboxLabel="Klassen"
                                       IsChecked="{Binding GradesViewModel.IsChecked, Mode=TwoWay}"
                                       BusyText="{Binding GradesViewModel.BusyText}">
@@ -99,7 +101,7 @@
                         </local:ImportTask.IsEnabled>    
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="2" Grid.Column="1"
+                    <local:ImportTask Grid.Row="3" Grid.Column="1"
                                     CheckboxLabel="Lernende"
                                     IsChecked="{Binding StudentsViewModel.IsChecked, Mode=TwoWay}"
                                     BusyText="{Binding StudentsViewModel.BusyText}">
@@ -111,7 +113,7 @@
                         </local:ImportTask.IsEnabled>    
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="3" Grid.Column="0"
+                    <local:ImportTask Grid.Row="4" Grid.Column="0"
                                             CheckboxLabel="Klassenleitungen"
                                             IsChecked="{Binding GradeTeachersViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding GradeTeachersViewModel.BusyText}">
@@ -123,7 +125,7 @@
                         </local:ImportTask.IsEnabled>    
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="3" Grid.Column="1"
+                    <local:ImportTask Grid.Row="4" Grid.Column="1"
                                             CheckboxLabel="Klassenmitgliedschaften"
                                             IsChecked="{Binding GradeMembershipsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding GradeMembershipsViewModel.BusyText}">
@@ -135,7 +137,7 @@
                         </local:ImportTask.IsEnabled>
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="4" Grid.Column="0"
+                    <local:ImportTask Grid.Row="5" Grid.Column="0"
                                             CheckboxLabel="Lernplattformen"
                                             IsChecked="{Binding LmsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding LmsViewModel.BusyText}">
@@ -147,7 +149,7 @@
                         </local:ImportTask.IsEnabled>    
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="4" Grid.Column="1"
+                    <local:ImportTask Grid.Row="5" Grid.Column="1"
                                             CheckboxLabel="Schüler-Lernplattforminfos"
                                             IsChecked="{Binding StudentsLmsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding StudentsLmsViewModel.BusyText}">
@@ -159,7 +161,7 @@
                         </local:ImportTask.IsEnabled>
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="5" Grid.Column="0"
+                    <local:ImportTask Grid.Row="6" Grid.Column="0"
                                             CheckboxLabel="Datenschutzkategorien"
                                             IsChecked="{Binding PrivacyCategoriesViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding PrivacyCategoriesViewModel.BusyText}">
@@ -171,7 +173,7 @@
                         </local:ImportTask.IsEnabled>    
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="5" Grid.Column="1"
+                    <local:ImportTask Grid.Row="6" Grid.Column="1"
                                             CheckboxLabel="Unterrichte"
                                             IsChecked="{Binding TuitionsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding TuitionsViewModel.BusyText}">
@@ -183,7 +185,7 @@
                         </local:ImportTask.IsEnabled>    
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="6" Grid.Column="0"
+                    <local:ImportTask Grid.Row="7" Grid.Column="0"
                                             CheckboxLabel="Lerngruppen"
                                             IsChecked="{Binding StudyGroupsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding StudyGroupsViewModel.BusyText}">
@@ -195,7 +197,7 @@
                         </local:ImportTask.IsEnabled>    
                     </local:ImportTask>
 
-                    <local:ImportTask Grid.Row="6" Grid.Column="1"
+                    <local:ImportTask Grid.Row="7" Grid.Column="1"
                                             CheckboxLabel="Lerngruppen-Mitgliedschaften"
                                             IsChecked="{Binding StudyGroupMembershipsViewModel.IsChecked, Mode=TwoWay}"
                                             BusyText="{Binding StudyGroupMembershipsViewModel.BusyText}">

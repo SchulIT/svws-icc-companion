@@ -4,27 +4,32 @@ namespace SvwsClient.Tool.Unterricht
 {
     public class UnterrichtResolver
     {
-
-        private const int BatchSize = 50;
-        
         private async Task<List<LeistungsdatenIntern>> GetLeistungsdatenAsync(SvwsRestClient client, string schema, long abschnittId)
         {
             var result = new List<LeistungsdatenIntern>();
             var schuelerListe = await client.GetSchuelerFuerAbschnittAsync(schema, abschnittId);
             var schuelerListeAktuellerAbschnitt = schuelerListe.Where(x => x.IdSchuljahresabschnitt == abschnittId).ToArray();
 
-            var requests = new List<Func<Task<SchuelerLernabschnittsdaten>>>();
+            var lernabschnittsdatenRequests = new List<Func<Task<ICollection<SchuelerLernabschnittsdaten>>>>();
             foreach (var schueler in schuelerListeAktuellerAbschnitt)
             {
-                requests.Add(() => client.GetSchuelerLernabschnittsdatenAsync(schema, schueler.Id, abschnittId));
+                lernabschnittsdatenRequests.Add(() => client.GetSchuelerLernabschnittsdatenByIdSchuelerAndIdJahresabschnittAsync(schema, schueler.Id, abschnittId));
             }
 
-            var responses = await BatchRequest.SendRequestAsync(requests);
+            var responses = await BatchRequest.SendRequestAsync(lernabschnittsdatenRequests);
+
             foreach (var lernabschnittsdaten in responses)
             {
-                foreach (var leistungsdaten in lernabschnittsdaten.Leistungsdaten)
+                var aktuell = lernabschnittsdaten.FirstOrDefault(x => x.WechselNr == 0);
+
+                if (aktuell == null)
                 {
-                    result.Add(new LeistungsdatenIntern(leistungsdaten, lernabschnittsdaten));
+                    continue;
+                }
+
+                foreach (var leistungsdaten in aktuell.Leistungsdaten)
+                {
+                    result.Add(new LeistungsdatenIntern(leistungsdaten, aktuell));
                 }
             }
 

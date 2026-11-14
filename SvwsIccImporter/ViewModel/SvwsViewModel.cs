@@ -9,10 +9,62 @@ namespace SvwsIccImporter.ViewModel
 {
     public partial class SvwsViewModel : ObservableRecipient
     {
+        public int MinMajorVersion = 1;
+        public int MinMinorVersion = 5;
+        public int MinPatchVersion = 0;
+        
         #region Properties
 
         [ObservableProperty]
         private string schoolName = "nicht verbunden";
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsSupportedVersion))] 
+        [NotifyPropertyChangedFor(nameof(UnsupportedServerVersionMessage))] 
+        private string serverVersion = string.Empty;
+
+        public bool IsSupportedVersion
+        {
+            get
+            {
+                if (ServerVersion == string.Empty)
+                {
+                    return false;
+                }
+
+                Version version;
+                if (!Version.TryParse(ServerVersion, out version))
+                {
+                    return false;
+                }
+
+                if (version.Major != MinMajorVersion)
+                {
+                    return false;
+                }
+
+                if (version.Minor != MinMinorVersion)
+                {
+                    return false;
+                }
+
+                if (version.Build < MinPatchVersion)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        public string UnsupportedServerVersionMessage
+        {
+            get
+            {
+                return
+                    $"Die Server-Version {ServerVersion} wurde nicht mit dieser Version des Import-Tools getestet. Da die SVWS-API nicht semantisch versioniert ist, muss davon ausgegangen werden, dass API-Endpunkte geändert oder gelöscht wurden. Bitte eine aktuellere Version des SVWS ICC Importers herunterladen.";
+            }
+        }
 
         #endregion
 
@@ -53,10 +105,14 @@ namespace SvwsIccImporter.ViewModel
                 var client = restClientFactory.GetClient();
                 var stammdaten = await client.GetSchuleStammdatenAsync(settingsManager.Settings.Svws.Schema);
                 SchoolName = string.IsNullOrEmpty(stammdaten.Bezeichnung1?.Trim()) ? "nicht verbunden" : stammdaten.Bezeichnung1.Trim();
+
+                var version = await client.GetServerVersionAsync();
+                ServerVersion = version;
             }
             catch (Exception ex)
             {
                 SchoolName = "Fehler";
+                ServerVersion = string.Empty;
             }
         }
     }
